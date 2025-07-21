@@ -97,8 +97,8 @@ export function HeroSection() {
       </section>
 
       <AssistantModal 
-        isOpen={assistantOpen} 
-        onClose={() => setAssistantOpen(false)} 
+        open={assistantOpen} 
+        onOpenChange={setAssistantOpen} 
       />
     </>
   );
