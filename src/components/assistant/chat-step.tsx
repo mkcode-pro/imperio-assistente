@@ -40,7 +40,9 @@ export function ChatStep({ profileData, onNewConsultation }: ChatStepProps) {
     setError("");
     
     try {
-      const systemInstructions = `
+      // Buscar configurações do localStorage (futuramente da API)
+      const savedSettings = localStorage.getItem('admin_settings');
+      let systemInstructions = `
 Você é um especialista em protocolos ergogênicos. Responda EXCLUSIVAMENTE com opções de ciclos práticos, sem textos longos ou avisos.
 
 ### DOSAGENS SEGURAS:
@@ -73,6 +75,12 @@ Você é um especialista em protocolos ergogênicos. Responda EXCLUSIVAMENTE com
 7. Sem seções de "Produtos Disponíveis" ou CTAs de compra
 8. Foque apenas nas opções de ciclos
       `;
+      
+      if (savedSettings) {
+        const settings = JSON.parse(savedSettings);
+        systemInstructions = settings.systemPrompt || systemInstructions;
+      }
+
 
       let availableProducts = realProducts;
       if (profileData.preference.toLowerCase() === 'oral') {
@@ -95,7 +103,13 @@ PERFIL:
 
       const fullPrompt = `${systemInstructions}\n\n${userProfile}\n\n${productsList}`;
 
-      const apiKey = "AIzaSyBAAMbYYD5UbnXbO2wwJs88S2FY0-HmxlY";
+      // Buscar API key das configurações
+      let apiKey = "AIzaSyBAAMbYYD5UbnXbO2wwJs88S2FY0-HmxlY";
+      if (savedSettings) {
+        const settings = JSON.parse(savedSettings);
+        apiKey = settings.apiKey || apiKey;
+      }
+      
       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
       
       const apiResponse = await fetch(apiUrl, {
@@ -120,6 +134,28 @@ PERFIL:
       
       const htmlResponse = await marked(aiText);
       setResponse(htmlResponse);
+      
+      // Salvar no histórico
+      const chatHistory = JSON.parse(localStorage.getItem('chat_history') || '[]');
+      
+      // Salvar mensagem do usuário
+      chatHistory.push({
+        id: Date.now().toString() + '_user',
+        timestamp: new Date().toISOString(),
+        role: 'user',
+        message: `Perfil: ${profileData.gender} | Objetivo: ${profileData.objective} | Preferência: ${profileData.preference}`,
+        userProfile: profileData
+      });
+      
+      // Salvar resposta do assistente
+      chatHistory.push({
+        id: Date.now().toString() + '_assistant',
+        timestamp: new Date().toISOString(),
+        role: 'assistant',
+        message: aiText
+      });
+      
+      localStorage.setItem('chat_history', JSON.stringify(chatHistory));
 
     } catch (err: any) {
       setError(err.message || "Erro ao gerar sugestão. Tente novamente.");

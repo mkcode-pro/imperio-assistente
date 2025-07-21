@@ -1,5 +1,4 @@
-
-# 🚀 Império Pharma - E-commerce Moderno de Suplementos
+# 🚀 Império Pharma - E-commerce com Assistente IA + Painel Administrativo
 
 [![React](https://img.shields.io/badge/React-18.3.1-blue.svg)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5.3-blue.svg)](https://www.typescriptlang.org/)
@@ -8,39 +7,48 @@
 
 ## 📋 Sobre o Projeto
 
-**Império Pharma** é uma aplicação e-commerce moderna especializada em suplementos, desenvolvida com React 18 + TypeScript e focada em alta performance e experiência do usuário otimizada.
+**Império Pharma** é uma aplicação e-commerce moderna especializada em suplementos, desenvolvida com React 18 + TypeScript. Agora inclui um **Painel Administrativo** completo para gerenciar o assistente IA e monitorar conversas.
 
 ### ✨ Principais Características
 - 🎯 **Design responsivo mobile-first** - Experiência otimizada para todos os dispositivos
 - 🛒 **Sistema de carrinho avançado** - Gestão completa de produtos e checkout
 - 🤖 **Assistente IA integrado** - Suporte inteligente com Google Gemini
 - 💳 **Checkout em 4 etapas** - Fluxo simplificado até WhatsApp
-- 📱 **PWA Ready** - Progressive Web App capabilities
+- 🔧 **Painel Administrativo** - Gerenciamento completo do assistente IA
+- 📊 **Histórico de Conversas** - Monitoramento de todas as interações
 - ⚡ **Performance otimizada** - Build com Vite para carregamento rápido
 
-## 🛠️ Stack Tecnológica
+## 🆕 NOVO: Painel Administrativo
 
-### Core
-- **React 18.3.1** - Library para interface de usuário
-- **TypeScript 5.5.3** - Tipagem estática
-- **Vite 5.4.1** - Build tool e servidor de desenvolvimento
+### 🔐 Acesso ao Painel
+- **URL**: `http://localhost:5173/admin` (desenvolvimento) ou `https://seudominio.com/admin` (produção)
+- **Senha padrão**: `admin123`
 
-### Styling & UI
-- **Tailwind CSS 3.4.11** - Framework CSS utility-first
-- **Radix UI** - Componentes acessíveis (40+ componentes)
-- **Lucide React** - Ícones modernos
-- **CSS Variables** - Sistema de design consistente
+### 🛠️ Funcionalidades do Painel
 
-### State & Data
-- **React Context** - Gerenciamento de estado global
-- **React Query (TanStack)** - Cache e sincronização de dados
-- **React Hook Form** - Formulários performáticos
-- **Zod** - Validação de esquemas
+#### 1. **Dashboard com Estatísticas**
+- Total de conversas realizadas
+- Conversas do dia atual
+- Tempo médio de resposta
+- Taxa de sucesso das consultas
 
-### Integrações
-- **Google Gemini AI** - Assistente inteligente
-- **WhatsApp API** - Integração para checkout
-- **ViaCEP** - Busca automática de endereços
+#### 2. **Configurações do Assistente IA**
+- ✏️ **Editor de Prompt do Sistema** - Modifique as instruções da IA em tempo real
+- 🔑 **Gerenciamento de API Key** - Configure a chave do Google Gemini
+- ⚙️ **Parâmetros da IA** - Ajuste max tokens e temperature
+- 💾 **Salvamento Local** - Configurações persistem no localStorage
+
+#### 3. **Histórico de Conversas**
+- 📝 **Visualização Completa** - Todas as interações usuário-assistente
+- 👤 **Perfis dos Usuários** - Dados de gênero, objetivo e preferências
+- 📅 **Timestamps Detalhados** - Data e hora de cada conversa
+- 📤 **Exportação de Dados** - Backup completo em JSON
+- 🗑️ **Limpeza de Histórico** - Remoção segura dos dados
+
+#### 4. **Analytics (Em Desenvolvimento)**
+- 📊 Gráficos de uso
+- 📈 Métricas de performance
+- 🎯 Relatórios detalhados
 
 ## 🚀 Instalação e Configuração
 
@@ -57,91 +65,213 @@ cd imperio-pharma
 
 # 2. Instale as dependências
 npm install
-# ou
-yarn install
-# ou
-pnpm install
 
-# 3. Inicie o servidor de desenvolvimento
+# 3. Configure as variáveis de ambiente (opcional)
+cp .env.example .env.local
+# Edite .env.local com suas configurações
+
+# 4. Inicie o servidor de desenvolvimento
 npm run dev
-# ou
-yarn dev
-# ou
-pnpm dev
-```
-
-**⚠️ IMPORTANTE - Portas Dinâmicas:**
-O projeto está configurado para **auto-detectar portas disponíveis**. Se a porta padrão estiver ocupada, o Vite automaticamente encontrará uma porta livre.
-
-Para **forçar uma porta específica** (útil em VPS com múltiplos projetos):
-```bash
-# Usando variável de ambiente
-PORT=3000 npm run dev
-
-# Ou defina no .env.local
-echo "PORT=3000" > .env.local
 ```
 
 ### 🌐 Configuração para VPS/Produção
 
-#### 1. **Verificação de Portas Ocupadas**
+#### 1. **Build de Produção**
 ```bash
-# Verificar portas em uso
-netstat -tulpn | grep LISTEN
-# ou
-ss -tulpn | grep LISTEN
-
-# Verificar porta específica
-lsof -i :3000
-```
-
-#### 2. **Setup com PM2 (Recomendado)**
-```bash
-# Instalar PM2 globalmente
-npm install -g pm2
-
-# Build de produção
+# Gerar build otimizado
 npm run build
 
-# Servir com PM2
-pm2 serve dist 3000 --name "imperio-pharma" --spa
-
-# Configurar auto-start
-pm2 startup
-pm2 save
+# Preview local do build
+npm run preview
 ```
 
-#### 3. **Setup com Docker**
-```dockerfile
-# Dockerfile
-FROM node:20-alpine AS builder
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-RUN npm run build
+#### 2. **Deploy em VPS com Nginx**
+```bash
+# 1. Fazer upload da pasta 'dist' para sua VPS
+scp -r dist/ usuario@sua-vps:/var/www/imperio-pharma/
 
-FROM nginx:alpine
-COPY --from=builder /app/dist /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# 2. Configurar Nginx
+sudo nano /etc/nginx/sites-available/imperio-pharma
 ```
 
-#### 4. **Nginx Reverse Proxy**
+**Configuração do Nginx:**
 ```nginx
 server {
     listen 80;
-    server_name imperio-pharma.com.br;
-    
+    server_name seudominio.com www.seudominio.com;
+    root /var/www/imperio-pharma;
+    index index.html;
+
+    # Configuração para SPA (Single Page Application)
     location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
+        try_files $uri $uri/ /index.html;
     }
+
+    # Cache para assets estáticos
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # Compressão Gzip
+    gzip on;
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
 }
+```
+
+```bash
+# 3. Ativar o site
+sudo ln -s /etc/nginx/sites-available/imperio-pharma /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+#### 3. **SSL com Let's Encrypt**
+```bash
+# Instalar certbot
+sudo apt install certbot python3-certbot-nginx
+
+# Obter certificado SSL
+sudo certbot --nginx -d seudominio.com -d www.seudominio.com
+```
+
+## 🔧 Configuração de Ambiente
+
+### Variáveis de Ambiente (`.env.local`)
+```bash
+# Porta do servidor (opcional - auto-detect se não especificado)
+PORT=3000
+
+# API do Google Gemini (obrigatório para IA)
+VITE_GEMINI_API_KEY=sua_chave_aqui
+
+# WhatsApp da empresa (opcional)
+VITE_WHATSAPP_NUMBER=5511999999999
+
+# PIX da empresa (opcional)
+VITE_PIX_KEY=exemplo@email.com
+```
+
+## 🔐 Segurança do Painel Administrativo
+
+### 🛡️ Configurações de Segurança
+
+#### 1. **Alterar Senha Padrão**
+No arquivo `src/pages/AdminPanel.tsx`, linha 45:
+```typescript
+// Altere a senha padrão
+if (password === "SUA_SENHA_FORTE_AQUI") {
+```
+
+#### 2. **Implementar Autenticação Avançada (Recomendado para Produção)**
+```typescript
+// Exemplo de autenticação com JWT ou sessão
+const handleLogin = async () => {
+  try {
+    const response = await fetch('/api/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password })
+    });
+    
+    if (response.ok) {
+      const { token } = await response.json();
+      localStorage.setItem('admin_token', token);
+      setIsAuthenticated(true);
+    }
+  } catch (error) {
+    toast.error("Erro de autenticação");
+  }
+};
+```
+
+#### 3. **Proteger Rota com Nginx (Produção)**
+```nginx
+# Adicionar ao bloco server do Nginx
+location /admin {
+    # Restringir por IP (opcional)
+    allow 192.168.1.0/24;  # Sua rede local
+    allow SEU.IP.PUBLICO.AQUI;
+    deny all;
+    
+    try_files $uri $uri/ /index.html;
+}
+```
+
+## 📊 Armazenamento de Dados
+
+### 🗄️ Sistema Atual (localStorage)
+- **Configurações**: `admin_settings` - Prompt, API key, parâmetros
+- **Histórico**: `chat_history` - Todas as conversas
+- **Backup**: Exportação automática em JSON
+
+### 🔄 Migração para Banco de Dados (Futuro)
+
+Para implementar persistência real, você pode migrar para:
+
+#### **Opção 1: PostgreSQL + API Node.js**
+```sql
+-- Estrutura das tabelas
+CREATE TABLE ai_settings (
+    id SERIAL PRIMARY KEY,
+    setting_name VARCHAR(255) UNIQUE NOT NULL,
+    setting_value TEXT
+);
+
+CREATE TABLE chat_history (
+    id SERIAL PRIMARY KEY,
+    timestamp TIMESTAMP DEFAULT NOW(),
+    role VARCHAR(50) NOT NULL,
+    message_content TEXT NOT NULL,
+    user_profile JSONB
+);
+```
+
+#### **Opção 2: SQLite (Simples)**
+```bash
+# Instalar dependências
+npm install sqlite3 better-sqlite3
+
+# Criar API simples com Express
+npm install express cors
+```
+
+## 🛠️ Customização
+
+### 🎨 **Modificar Aparência do Painel**
+```typescript
+// src/pages/AdminPanel.tsx
+// Alterar cores do tema
+className="bg-gradient-to-r from-pharma-navy to-pharma-blue"
+```
+
+### 📝 **Adicionar Novos Campos de Configuração**
+```typescript
+// Adicionar ao interface SystemSettings
+interface SystemSettings {
+  systemPrompt: string;
+  apiKey: string;
+  maxTokens: number;
+  temperature: number;
+  // Novos campos
+  maxConversations: number;
+  enableLogging: boolean;
+}
+```
+
+### 📊 **Implementar Analytics Personalizados**
+```typescript
+// Exemplo de métricas customizadas
+const calculateMetrics = (history: ChatMessage[]) => {
+  const today = new Date().toDateString();
+  const thisWeek = /* lógica da semana */;
+  
+  return {
+    dailyAverage: history.filter(/* filtro */).length,
+    weeklyGrowth: /* cálculo */,
+    popularTopics: /* análise de conteúdo */
+  };
+};
 ```
 
 ## 🔧 Scripts Disponíveis
@@ -163,165 +293,84 @@ npm run lint         # Análise de código
 
 ```
 src/
-├── components/              # 61 componentes React organizados
+├── components/              # 61+ componentes React organizados
 │   ├── assistant/          # Sistema de IA (4 componentes)
-│   │   ├── assistant-modal.tsx
-│   │   ├── chat-step.tsx
-│   │   ├── profile-form-step.tsx
-│   │   └── terms-step.tsx
-│   ├── cart/              # Sistema de carrinho (2 componentes)
-│   │   ├── cart-drawer.tsx
-│   │   └── shipping-calculator.tsx
-│   ├── checkout/          # Fluxo de checkout (1 componente)
-│   │   └── checkout-steps.tsx
-│   ├── layout/            # Layout principal (3 componentes)
-│   │   ├── header.tsx
-│   │   ├── footer.tsx
-│   │   └── mobile-bottom-nav.tsx
-│   ├── sections/          # Seções da página (4 componentes)
-│   │   ├── hero-section.tsx
-│   │   ├── brands-section.tsx
-│   │   ├── products-section.tsx
-│   │   └── checkout-section.tsx
-│   └── ui/               # 40+ componentes base (Radix UI)
-├── contexts/              # State management
-│   └── cart-context.tsx
-├── hooks/                 # Custom hooks (5 hooks)
-├── lib/                   # Bibliotecas e configurações
-│   ├── utils.ts
-│   └── gemini.ts
-├── pages/                 # Páginas principais
-│   ├── Index.tsx
-│   └── NotFound.tsx
-├── types/                 # Definições TypeScript
-└── utils/                 # Funções utilitárias
-    └── shipping.ts
+│   ├── layout/             # Header, Footer, Navigation
+│   ├── sections/           # Seções da página principal
+│   └── ui/                 # 40+ componentes base (Radix UI)
+├── pages/                  # Páginas principais
+│   ├── Index.tsx          # Página inicial
+│   ├── AdminPanel.tsx     # 🆕 Painel administrativo
+│   └── NotFound.tsx       # Página 404
+├── hooks/                  # Custom hooks
+├── lib/                    # Bibliotecas e configurações
+├── types/                  # Definições TypeScript
+└── utils/                  # Funções utilitárias
 ```
-
-## 🔧 Configuração de Ambiente
-
-### Variáveis de Ambiente (`.env.local`)
-```bash
-# Porta do servidor (opcional - auto-detect se não especificado)
-PORT=3000
-
-# API do Google Gemini (obrigatório para IA)
-VITE_GEMINI_API_KEY=sua_chave_aqui
-
-# WhatsApp da empresa (opcional)
-VITE_WHATSAPP_NUMBER=5511999999999
-
-# PIX da empresa (opcional)
-VITE_PIX_KEY=exemplo@email.com
-```
-
-### ⚠️ **Variáveis Obrigatórias para Produção:**
-1. **VITE_GEMINI_API_KEY** - Chave da API do Google Gemini
-2. **VITE_WHATSAPP_NUMBER** - Número real da empresa
-3. **VITE_PIX_KEY** - Chave PIX real para pagamentos
 
 ## 🎯 Funcionalidades Implementadas
 
 ### ✅ **Sistema Completo de E-commerce**
 - [x] Catálogo de produtos com categorias e marcas
 - [x] Carrinho com cálculo de frete automático
-- [x] Checkout em 4 etapas (dados, endereço, resumo, confirmação)
+- [x] Checkout em 4 etapas
 - [x] Integração WhatsApp para finalização
 - [x] Upload de comprovante PIX
 
-### ✅ **Interface e UX**
-- [x] Design responsivo mobile-first
-- [x] Navegação inferior móvel
-- [x] Modais de confirmação
-- [x] Assistente IA integrado
-- [x] Sistema de acordeão para categorias
+### ✅ **Assistente IA Avançado**
+- [x] Chat inteligente com Google Gemini
+- [x] Protocolos personalizados por perfil
+- [x] Sistema de termos e condições
+- [x] 🆕 **Configuração dinâmica via painel admin**
+- [x] 🆕 **Histórico completo de conversas**
 
-### ✅ **Integrações Externas**
-- [x] Google Gemini AI (assistente)
-- [x] ViaCEP (busca de endereços)
-- [x] WhatsApp (checkout)
+### ✅ **Painel Administrativo**
+- [x] 🆕 **Dashboard com estatísticas em tempo real**
+- [x] 🆕 **Editor de prompt do sistema**
+- [x] 🆕 **Gerenciamento de configurações da IA**
+- [x] 🆕 **Visualização do histórico de conversas**
+- [x] 🆕 **Sistema de autenticação**
+- [x] 🆕 **Exportação de dados**
 
-## 🔧 Customização e Manutenção
+## 🚀 Próximos Passos
 
-### **Modificar Produtos e Categorias**
-Os produtos são definidos em arrays TypeScript para facilitar manutenção:
-```typescript
-// Localização: src/data/products.ts (arquivo será criado se necessário)
-export const products = [
-  {
-    id: "1",
-    name: "Produto Exemplo",
-    category: "injectables",
-    brand: "landerlan",
-    price: 199.99,
-    // ... outros campos
-  }
-];
-```
+### 🔄 **Melhorias Planejadas**
+- [ ] **Backend real** - API Node.js + PostgreSQL
+- [ ] **Analytics avançados** - Gráficos e relatórios
+- [ ] **Autenticação JWT** - Sistema de login robusto
+- [ ] **Notificações push** - Alertas em tempo real
+- [ ] **Multi-usuário** - Diferentes níveis de acesso
+- [ ] **Backup automático** - Sincronização com cloud
 
-### **Customizar Assistente IA**
-```typescript
-// Localização: src/lib/gemini.ts
-// Configurações do comportamento da IA
-```
-
-### **Modificar Fluxo de Checkout**
-```typescript
-// Localização: src/components/checkout/checkout-steps.tsx
-// Etapas: CustomerData → Address → Summary → Confirmation
-```
-
-## 🚀 Deploy e Produção
-
-### **Opções de Deploy Recomendadas:**
-
-1. **Vercel** (Mais simples)
-   ```bash
-   npm i -g vercel
-   vercel --prod
-   ```
-
-2. **Netlify**
-   ```bash
-   npm run build
-   # Upload da pasta dist/
-   ```
-
-3. **VPS Própria**
-   - Seguir instruções de "Configuração para VPS" acima
-   - Configurar SSL com Let's Encrypt
-   - Monitoramento com PM2
-
-### **Checklist Pré-Deploy:**
-- [ ] Configurar variáveis de ambiente de produção
-- [ ] Testar build local (`npm run build`)
-- [ ] Verificar todas as integrações (IA, WhatsApp, ViaCEP)
-- [ ] Configurar domínio e SSL
-- [ ] Testar responsividade em dispositivos reais
+### 📊 **Analytics em Desenvolvimento**
+- [ ] Gráficos de uso por período
+- [ ] Análise de sentimento das conversas
+- [ ] Métricas de performance da IA
+- [ ] Relatórios de conversão
 
 ## 🤝 Contribuição
 
 Veja [CONTRIBUTING.md](./CONTRIBUTING.md) para guias detalhados de desenvolvimento e manutenção.
 
-## 📞 Suporte e Monitoramento
+## 📞 Suporte
+
+### **Acesso ao Painel**
+- URL: `/admin`
+- Senha padrão: `admin123`
+
+### **Problemas Comuns**
+1. **Painel não carrega**: Verifique se a rota `/admin` está configurada
+2. **Configurações não salvam**: Verifique permissões do localStorage
+3. **Histórico vazio**: Faça algumas conversas com o assistente primeiro
 
 ### **Logs e Debug**
-```bash
-# Logs do PM2
-pm2 logs imperio-pharma
-
-# Monitoramento
-pm2 monit
-```
-
-### **Health Check**
-```bash
-# Verificar se a aplicação está rodando
-curl http://localhost:3000
+```javascript
+// Habilitar logs detalhados no console
+localStorage.setItem('DEBUG_ADMIN', 'true');
 ```
 
 ---
 
-**Desenvolvido com foco em performance, acessibilidade e experiência do usuário.**
+**🚀 Agora com Painel Administrativo Completo! Gerencie seu assistente IA com facilidade.**
 
-*Para dúvidas técnicas, consulte a documentação completa ou abra uma issue.*
+*Para dúvidas técnicas sobre o painel administrativo, consulte a documentação ou abra uma issue.*
