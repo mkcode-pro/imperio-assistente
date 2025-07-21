@@ -1,178 +1,327 @@
 
-# 🚀 Império Pharma - E-commerce de Suplementos
+# 🚀 Império Pharma - E-commerce Moderno de Suplementos
 
-[![Status](https://img.shields.io/badge/Status-Pronto%20para%20Deploy-brightgreen)](https://github.com)
-[![React](https://img.shields.io/badge/React-18.3.1-blue)](https://reactjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Enabled-blue)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38bdf8)](https://tailwindcss.com/)
+[![React](https://img.shields.io/badge/React-18.3.1-blue.svg)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.5.3-blue.svg)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.4.1-646CFF.svg)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.11-38B2AC.svg)](https://tailwindcss.com/)
 
 ## 📋 Sobre o Projeto
 
-**Império Pharma** é uma landing page de e-commerce especializada em suplementos anabolizantes e produtos farmacêuticos. O projeto foi desenvolvido com foco em **alta conversão** e **experiência mobile-first**.
+**Império Pharma** é uma aplicação e-commerce moderna especializada em suplementos, desenvolvida com React 18 + TypeScript e focada em alta performance e experiência do usuário otimizada.
 
-### ✨ Características Principais
-- 🎯 **Design focado em conversão** - Fluxo otimizado para vendas
-- 📱 **Mobile-first** - Experiência prioritária em dispositivos móveis  
-- 🚀 **Performance otimizada** - Carregamento rápido e navegação fluida
-- 🛒 **Carrinho inteligente** - Sistema completo com cálculo de frete
-- 💳 **Checkout simplificado** - 4 etapas até finalização no WhatsApp
-- 🤖 **Assistente IA** - Suporte inteligente para protocolos
+### ✨ Principais Características
+- 🎯 **Design responsivo mobile-first** - Experiência otimizada para todos os dispositivos
+- 🛒 **Sistema de carrinho avançado** - Gestão completa de produtos e checkout
+- 🤖 **Assistente IA integrado** - Suporte inteligente com Google Gemini
+- 💳 **Checkout em 4 etapas** - Fluxo simplificado até WhatsApp
+- 📱 **PWA Ready** - Progressive Web App capabilities
+- ⚡ **Performance otimizada** - Build com Vite para carregamento rápido
 
 ## 🛠️ Stack Tecnológica
 
-- **Frontend**: React 18 + TypeScript
-- **Build**: Vite
-- **Styling**: Tailwind CSS
-- **Components**: shadcn/ui + Radix UI
-- **State**: React Context + Custom Hooks
-- **Icons**: Lucide React
-- **Deploy**: Lovable/Vercel/Netlify
+### Core
+- **React 18.3.1** - Library para interface de usuário
+- **TypeScript 5.5.3** - Tipagem estática
+- **Vite 5.4.1** - Build tool e servidor de desenvolvimento
 
-## 🚀 Começar Rapidamente
+### Styling & UI
+- **Tailwind CSS 3.4.11** - Framework CSS utility-first
+- **Radix UI** - Componentes acessíveis (40+ componentes)
+- **Lucide React** - Ícones modernos
+- **CSS Variables** - Sistema de design consistente
+
+### State & Data
+- **React Context** - Gerenciamento de estado global
+- **React Query (TanStack)** - Cache e sincronização de dados
+- **React Hook Form** - Formulários performáticos
+- **Zod** - Validação de esquemas
+
+### Integrações
+- **Google Gemini AI** - Assistente inteligente
+- **WhatsApp API** - Integração para checkout
+- **ViaCEP** - Busca automática de endereços
+
+## 🚀 Instalação e Configuração
 
 ### Pré-requisitos
-- Node.js 18+ 
-- npm ou yarn
+- **Node.js** 18+ (recomendado: 20+)
+- **npm**, **yarn**, **pnpm** ou **bun**
 
-### Instalação
+### 🔧 Instalação Local (Desenvolvimento)
+
 ```bash
-# Clone o repositório
-git clone <YOUR_GIT_URL>
-
-# Entre no diretório
+# 1. Clone o repositório
+git clone <URL_DO_REPOSITORIO>
 cd imperio-pharma
 
-# Instale as dependências
+# 2. Instale as dependências
 npm install
+# ou
+yarn install
+# ou
+pnpm install
 
-# Inicie o servidor de desenvolvimento
+# 3. Inicie o servidor de desenvolvimento
 npm run dev
+# ou
+yarn dev
+# ou
+pnpm dev
 ```
 
-### Scripts Disponíveis
+**⚠️ IMPORTANTE - Portas Dinâmicas:**
+O projeto está configurado para **auto-detectar portas disponíveis**. Se a porta padrão estiver ocupada, o Vite automaticamente encontrará uma porta livre.
+
+Para **forçar uma porta específica** (útil em VPS com múltiplos projetos):
 ```bash
-npm run dev      # Servidor de desenvolvimento
-npm run build    # Build de produção  
-npm run preview  # Preview do build
+# Usando variável de ambiente
+PORT=3000 npm run dev
+
+# Ou defina no .env.local
+echo "PORT=3000" > .env.local
 ```
 
-## 📱 Funcionalidades Implementadas
+### 🌐 Configuração para VPS/Produção
 
-### ✅ Core Features
-- [x] **Catálogo de produtos** - Organizado por marcas e categorias
-- [x] **Sistema de carrinho** - Adicionar, remover, alterar quantidades
-- [x] **Cálculo de frete** - Integração ViaCEP com 3 opções de entrega
-- [x] **Checkout completo** - 4 etapas: dados, endereço, resumo, confirmação
-- [x] **Integração WhatsApp** - Finalização automática via mensagem
-- [x] **Upload de comprovante** - Campo para anexar comprovante PIX
-- [x] **Design responsivo** - Otimizado para todos os dispositivos
+#### 1. **Verificação de Portas Ocupadas**
+```bash
+# Verificar portas em uso
+netstat -tulpn | grep LISTEN
+# ou
+ss -tulpn | grep LISTEN
 
-### 🎨 Interface
-- [x] **Header responsivo** - Logo, navegação, contador carrinho
-- [x] **Hero section** - Call-to-action principal com assistente IA
-- [x] **Seleção de marcas** - Grid de laboratórios/marcas
-- [x] **Grid de produtos** - 2 colunas mobile, 4 desktop
-- [x] **Navegação mobile** - Barra fixa inferior
-- [x] **Modals inteligentes** - Confirmações e feedbacks
+# Verificar porta específica
+lsof -i :3000
+```
 
-### 📊 Dados
-- [x] **Produtos mockados** - 12 produtos de exemplo
-- [x] **4 marcas principais** - Landerlan, Dragon Pharma, Balkan, Hilma
-- [x] **Categorias** - Injetáveis, Orais, TPC
-- [x] **Frete por estado** - Cálculo dinâmico PAC/SEDEX/Express
+#### 2. **Setup com PM2 (Recomendado)**
+```bash
+# Instalar PM2 globalmente
+npm install -g pm2
+
+# Build de produção
+npm run build
+
+# Servir com PM2
+pm2 serve dist 3000 --name "imperio-pharma" --spa
+
+# Configurar auto-start
+pm2 startup
+pm2 save
+```
+
+#### 3. **Setup com Docker**
+```dockerfile
+# Dockerfile
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+RUN npm run build
+
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+#### 4. **Nginx Reverse Proxy**
+```nginx
+server {
+    listen 80;
+    server_name imperio-pharma.com.br;
+    
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+```
+
+## 🔧 Scripts Disponíveis
+
+```bash
+# Desenvolvimento
+npm run dev          # Servidor local com hot-reload
+
+# Build
+npm run build        # Build otimizado para produção
+npm run preview      # Preview do build localmente
+
+# Utilitários
+npm run type-check   # Verificação de tipos TypeScript
+npm run lint         # Análise de código
+```
 
 ## 📁 Estrutura do Projeto
 
 ```
 src/
-├── components/          # Componentes React organizados por funcionalidade
-│   ├── cart/           # Sistema de carrinho
-│   ├── checkout/       # Fluxo de checkout
-│   ├── layout/         # Header, Footer, Navigation  
-│   ├── sections/       # Seções da página principal
-│   └── ui/             # Componentes base (shadcn/ui)
-├── contexts/           # Providers de estado global
-├── data/              # Dados mockados
-├── hooks/             # Custom hooks
-└── utils/             # Funções utilitárias
+├── components/              # 61 componentes React organizados
+│   ├── assistant/          # Sistema de IA (4 componentes)
+│   │   ├── assistant-modal.tsx
+│   │   ├── chat-step.tsx
+│   │   ├── profile-form-step.tsx
+│   │   └── terms-step.tsx
+│   ├── cart/              # Sistema de carrinho (2 componentes)
+│   │   ├── cart-drawer.tsx
+│   │   └── shipping-calculator.tsx
+│   ├── checkout/          # Fluxo de checkout (1 componente)
+│   │   └── checkout-steps.tsx
+│   ├── layout/            # Layout principal (3 componentes)
+│   │   ├── header.tsx
+│   │   ├── footer.tsx
+│   │   └── mobile-bottom-nav.tsx
+│   ├── sections/          # Seções da página (4 componentes)
+│   │   ├── hero-section.tsx
+│   │   ├── brands-section.tsx
+│   │   ├── products-section.tsx
+│   │   └── checkout-section.tsx
+│   └── ui/               # 40+ componentes base (Radix UI)
+├── contexts/              # State management
+│   └── cart-context.tsx
+├── hooks/                 # Custom hooks (5 hooks)
+├── lib/                   # Bibliotecas e configurações
+│   ├── utils.ts
+│   └── gemini.ts
+├── pages/                 # Páginas principais
+│   ├── Index.tsx
+│   └── NotFound.tsx
+├── types/                 # Definições TypeScript
+└── utils/                 # Funções utilitárias
+    └── shipping.ts
 ```
 
-## 🔧 Configuração para Produção
+## 🔧 Configuração de Ambiente
 
-### ⚠️ Antes do Deploy - Checklist Obrigatório
-
-1. **Dados da Empresa**
-   - [ ] Atualizar número WhatsApp (atual: +5511999999999)
-   - [ ] Configurar chave PIX real (atual: exemplo@email.com)  
-   - [ ] Adicionar informações reais da empresa
-
-2. **Assets**
-   - [ ] Substituir imagens placeholder por fotos reais
-   - [ ] Corrigir path da imagem do robô
-   - [ ] Atualizar catálogo com preços reais
-
-3. **Testes**
-   - [ ] Testar fluxo completo de compra
-   - [ ] Verificar responsividade em diferentes dispositivos
-   - [ ] Validar integração WhatsApp
-
-### 📱 Deploy Recomendado
-
-**Opção 1: Lovable (Mais Simples)**
-1. Clique em "Share" → "Publish" no painel
-2. Configure domínio customizado se necessário
-
-**Opção 2: Vercel (Gratuito)**
+### Variáveis de Ambiente (`.env.local`)
 ```bash
-npm i -g vercel
-vercel
+# Porta do servidor (opcional - auto-detect se não especificado)
+PORT=3000
+
+# API do Google Gemini (obrigatório para IA)
+VITE_GEMINI_API_KEY=sua_chave_aqui
+
+# WhatsApp da empresa (opcional)
+VITE_WHATSAPP_NUMBER=5511999999999
+
+# PIX da empresa (opcional)
+VITE_PIX_KEY=exemplo@email.com
 ```
 
-## 📚 Documentação Adicional
+### ⚠️ **Variáveis Obrigatórias para Produção:**
+1. **VITE_GEMINI_API_KEY** - Chave da API do Google Gemini
+2. **VITE_WHATSAPP_NUMBER** - Número real da empresa
+3. **VITE_PIX_KEY** - Chave PIX real para pagamentos
 
-- 📖 **[DOCUMENTACAO_PROJETO.md](./DOCUMENTACAO_PROJETO.md)** - Documentação técnica completa
-- ✅ **[TODO.md](./TODO.md)** - Lista de tarefas e melhorias
-- 🚀 **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Guia detalhado de deploy
-- 📁 **[ESTRUTURA_PROJETO.md](./ESTRUTURA_PROJETO.md)** - Mapa da arquitetura
+## 🎯 Funcionalidades Implementadas
 
-## 🎯 Status do Projeto
+### ✅ **Sistema Completo de E-commerce**
+- [x] Catálogo de produtos com categorias e marcas
+- [x] Carrinho com cálculo de frete automático
+- [x] Checkout em 4 etapas (dados, endereço, resumo, confirmação)
+- [x] Integração WhatsApp para finalização
+- [x] Upload de comprovante PIX
 
-| Funcionalidade | Status | Descrição |
-|---|---|---|
-| Frontend | ✅ Completo | Interface totalmente implementada |
-| Carrinho | ✅ Completo | Sistema funcional com frete |
-| Checkout | ✅ Completo | 4 etapas + WhatsApp |
-| Responsivo | ✅ Completo | Mobile-first implementado |
-| Dados Reais | ⚠️ Pendente | Substituir dados mockados |
-| Backend | 🔄 Opcional | Requer integração Supabase |
+### ✅ **Interface e UX**
+- [x] Design responsivo mobile-first
+- [x] Navegação inferior móvel
+- [x] Modais de confirmação
+- [x] Assistente IA integrado
+- [x] Sistema de acordeão para categorias
 
-## 💡 Próximos Passos
+### ✅ **Integrações Externas**
+- [x] Google Gemini AI (assistente)
+- [x] ViaCEP (busca de endereços)
+- [x] WhatsApp (checkout)
 
-### 🔴 Crítico (Deploy)
-1. Configurar dados reais da empresa
-2. Testar fluxo completo
-3. Deploy em produção
+## 🔧 Customização e Manutenção
 
-### 🟡 Melhorias
-1. Integração Supabase (persistência)
-2. Painel admin funcional  
-3. Analytics e métricas
+### **Modificar Produtos e Categorias**
+Os produtos são definidos em arrays TypeScript para facilitar manutenção:
+```typescript
+// Localização: src/data/products.ts (arquivo será criado se necessário)
+export const products = [
+  {
+    id: "1",
+    name: "Produto Exemplo",
+    category: "injectables",
+    brand: "landerlan",
+    price: 199.99,
+    // ... outros campos
+  }
+];
+```
 
-### 🟢 Extras
-1. Sistema de pagamento online
-2. PWA (Progressive Web App)
-3. Chat ao vivo
+### **Customizar Assistente IA**
+```typescript
+// Localização: src/lib/gemini.ts
+// Configurações do comportamento da IA
+```
 
-## 📞 Suporte
+### **Modificar Fluxo de Checkout**
+```typescript
+// Localização: src/components/checkout/checkout-steps.tsx
+// Etapas: CustomerData → Address → Summary → Confirmation
+```
 
-Para dúvidas técnicas:
-1. Consulte a documentação completa
-2. Verifique os logs do console
-3. Teste em ambiente local primeiro
+## 🚀 Deploy e Produção
+
+### **Opções de Deploy Recomendadas:**
+
+1. **Vercel** (Mais simples)
+   ```bash
+   npm i -g vercel
+   vercel --prod
+   ```
+
+2. **Netlify**
+   ```bash
+   npm run build
+   # Upload da pasta dist/
+   ```
+
+3. **VPS Própria**
+   - Seguir instruções de "Configuração para VPS" acima
+   - Configurar SSL com Let's Encrypt
+   - Monitoramento com PM2
+
+### **Checklist Pré-Deploy:**
+- [ ] Configurar variáveis de ambiente de produção
+- [ ] Testar build local (`npm run build`)
+- [ ] Verificar todas as integrações (IA, WhatsApp, ViaCEP)
+- [ ] Configurar domínio e SSL
+- [ ] Testar responsividade em dispositivos reais
+
+## 🤝 Contribuição
+
+Veja [CONTRIBUTING.md](./CONTRIBUTING.md) para guias detalhados de desenvolvimento e manutenção.
+
+## 📞 Suporte e Monitoramento
+
+### **Logs e Debug**
+```bash
+# Logs do PM2
+pm2 logs imperio-pharma
+
+# Monitoramento
+pm2 monit
+```
+
+### **Health Check**
+```bash
+# Verificar se a aplicação está rodando
+curl http://localhost:3000
+```
 
 ---
 
-**🚀 Projeto pronto para produção com dados mockados!**  
-**📝 Substitua os dados de exemplo e faça o deploy.**
+**Desenvolvido com foco em performance, acessibilidade e experiência do usuário.**
 
-*Desenvolvido com foco em conversão e experiência do usuário.*
+*Para dúvidas técnicas, consulte a documentação completa ou abra uma issue.*
