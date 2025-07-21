@@ -102,21 +102,21 @@ export function HeroSection() {
               </div>
 
               {/* Social Proof Compacto */}
-              <div className="bg-gradient-to-r from-pharma-light/50 to-background border border-pharma-blue/20 rounded-xl p-4 shadow-lg">
-                <div className="flex items-center justify-center space-x-6 text-xs sm:text-sm">
-                  <div className="text-center">
-                    <div className="text-lg sm:text-xl font-bold text-pharma-navy">IA</div>
-                    <div className="text-muted-foreground">Especializada</div>
+              <div className="bg-gradient-to-r from-pharma-light/50 to-background border border-pharma-blue/20 rounded-xl p-3 sm:p-4 shadow-lg overflow-hidden">
+                <div className="flex items-center justify-between text-xs sm:text-sm max-w-full">
+                  <div className="text-center flex-1 min-w-0">
+                    <div className="text-sm sm:text-lg lg:text-xl font-bold text-pharma-navy truncate">IA</div>
+                    <div className="text-muted-foreground text-xs sm:text-sm truncate">Especializada</div>
                   </div>
-                  <div className="w-px h-8 bg-border"></div>
-                  <div className="text-center">
-                    <div className="text-lg sm:text-xl font-bold text-pharma-navy">24/7</div>
-                    <div className="text-muted-foreground">Disponibilidade</div>
+                  <div className="w-px h-6 sm:h-8 bg-border mx-2 sm:mx-3"></div>
+                  <div className="text-center flex-1 min-w-0">
+                    <div className="text-sm sm:text-lg lg:text-xl font-bold text-pharma-navy truncate">24/7</div>
+                    <div className="text-muted-foreground text-xs sm:text-sm truncate">Disponível</div>
                   </div>
-                  <div className="w-px h-8 bg-border"></div>
-                  <div className="text-center">
-                    <div className="text-lg sm:text-xl font-bold text-pharma-navy">BETA</div>
-                    <div className="text-muted-foreground">Exclusivo</div>
+                  <div className="w-px h-6 sm:h-8 bg-border mx-2 sm:mx-3"></div>
+                  <div className="text-center flex-1 min-w-0">
+                    <div className="text-sm sm:text-lg lg:text-xl font-bold text-pharma-navy truncate">BETA</div>
+                    <div className="text-muted-foreground text-xs sm:text-sm truncate">Exclusivo</div>
                   </div>
                 </div>
               </div>
