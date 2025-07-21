@@ -56,8 +56,8 @@ export function AssistantModal({ open, onOpenChange }: AssistantModalProps) {
         </DialogDescription>
         
         <div className="relative flex flex-col h-screen w-full bg-background">
-          {/* Progress Header */}
-          <div className="flex-shrink-0 bg-gradient-to-r from-pharma-navy/5 to-pharma-blue/5 border-b border-border/50 p-3 sm:p-4">
+          {/* Progress Header - Ajustado para evitar conflito */}
+          <div className="flex-shrink-0 bg-gradient-to-r from-pharma-navy/5 to-pharma-blue/5 border-b border-border/50 p-3 sm:p-4 pr-16">
             <div className="container mx-auto max-w-4xl">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
@@ -74,7 +74,8 @@ export function AssistantModal({ open, onOpenChange }: AssistantModalProps) {
                   </div>
                 </div>
                 
-                <div className="flex items-center space-x-3">
+                {/* Badge GRATUITO reposicionado */}
+                <div className="flex items-center space-x-3 mr-8">
                   <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold">
                     GRATUITO
                   </div>

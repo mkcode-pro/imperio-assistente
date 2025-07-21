@@ -55,41 +55,33 @@ export function TermsStep({ onAccept }: TermsStepProps) {
   const termsText = `
 TERMO DE RESPONSABILIDADE - ASSISTENTE MAROMBA
 
-🎯 ASSISTENTE EDUCACIONAL SOBRE PROTOCOLOS ERGOGÊNICOS
+🎯 ASSISTENTE EDUCACIONAL SOBRE SUPLEMENTAÇÃO
 
-1. NATUREZA EDUCACIONAL
-Este assistente fornece informações educacionais sobre protocolos de substâncias ergogênicas. NÃO substitui consulta médica.
+1. NATUREZA DO SERVIÇO
+Este assistente fornece informações educacionais sobre protocolos de suplementação. NÃO substitui consulta médica especializada.
 
 2. CONSULTA MÉDICA OBRIGATÓRIA
-• Consulte um endocrinologista especializado antes de qualquer protocolo
-• Apenas médicos podem prescrever e monitorar ciclos
-• Realize exames hormonais antes e durante o uso
+• Consulte um endocrinologista antes de qualquer protocolo
+• Apenas médicos podem prescrever e monitorar tratamentos
+• Realize exames médicos antes e durante o uso
 
 3. PRINCIPAIS RISCOS
 • Supressão hormonal natural
-• Danos hepáticos e cardiovasculares  
+• Efeitos colaterais cardiovasculares e hepáticos
 • Alterações comportamentais
-• Efeitos colaterais permanentes
+• Possíveis efeitos permanentes
 
 4. SUA RESPONSABILIDADE
 • Você é totalmente responsável por suas decisões
 • O Império Pharma não se responsabiliza pelo uso das informações
-• Assume todos os riscos do uso de substâncias ergogênicas
+• Assume todos os riscos do uso de substâncias
 
-5. REQUISITOS LEGAIS
+5. REQUISITOS
 • Ser maior de 21 anos
 • Ter capacidade civil plena
-• Conhecer a legislação local sobre substâncias controladas
+• Conhecer a legislação local
 
-6. ISENÇÃO DE RESPONSABILIDADE
-O Império Pharma e seus colaboradores ficam isentos de qualquer responsabilidade por:
-• Danos físicos ou mentais
-• Efeitos colaterais ou complicações
-• Problemas legais relacionados ao uso
-
-⚠️ ATENÇÃO: Este assistente é apenas educacional. Sempre procure orientação médica especializada.
-
-A medicina esportiva requer supervisão profissional rigorosa.
+⚠️ IMPORTANTE: Este assistente é apenas educacional. Sempre procure orientação médica especializada para qualquer protocolo de suplementação.
   `;
 
   return (
