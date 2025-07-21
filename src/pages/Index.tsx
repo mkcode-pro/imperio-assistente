@@ -2,7 +2,6 @@
 import { HeroSection } from "@/components/sections/hero-section";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { FloatingAssistantButton } from "@/components/floating-assistant-button";
 
 const Index = () => {
   return (
@@ -12,9 +11,6 @@ const Index = () => {
         <HeroSection />
       </main>
       <Footer />
-      
-      {/* Botão flutuante sempre acessível */}
-      <FloatingAssistantButton />
     </div>
   );
 };

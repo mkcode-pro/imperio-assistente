@@ -10,9 +10,9 @@ export function HeroSection() {
 
   return (
     <>
-      <section className="relative py-6 lg:py-12 px-4 bg-gradient-to-br from-background via-background to-pharma-light/20 overflow-x-hidden">
+      <section className="relative py-4 lg:py-8 px-4 bg-gradient-to-br from-background via-background to-pharma-light/20 overflow-x-hidden">
         <div className="container mx-auto max-w-4xl">
-          <div className="flex flex-col items-center text-center space-y-6">
+          <div className="flex flex-col items-center text-center space-y-4">
             
             {/* Badges Profissionais Centralizados */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
@@ -25,7 +25,7 @@ export function HeroSection() {
             </div>
 
             {/* Robô IA com Tamanho Otimizado */}
-            <div className="w-48 sm:w-56 lg:w-64 mx-auto">
+            <div className="w-40 sm:w-48 lg:w-56 mx-auto">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-pharma-blue/30 to-pharma-navy/20 rounded-full blur-2xl scale-110 animate-pulse"></div>
                 <img 
@@ -43,8 +43,8 @@ export function HeroSection() {
             </div>
 
             {/* Conteúdo Principal Otimizado */}
-            <div className="space-y-6 w-full max-w-3xl">
-              <div className="space-y-4">
+            <div className="space-y-4 w-full max-w-3xl">
+              <div className="space-y-3">
                 <div className="flex items-center justify-center space-x-2 text-pharma-blue font-bold text-sm">
                   <Zap className="h-4 w-4 text-pharma-blue" />
                   <span className="text-center">IA ESPECIALIZADA • ACESSO EXCLUSIVO</span>
@@ -60,28 +60,28 @@ export function HeroSection() {
                   </span>
                 </h1>
 
-                {/* CTA Principal LOGO APÓS TÍTULO */}
-                <div className="space-y-4 py-4">
-                  <Button 
-                    size="lg"
-                    onClick={() => setAssistantOpen(true)}
-                    className="bg-gradient-to-r from-pharma-navy to-pharma-blue hover:from-pharma-navy/90 hover:to-pharma-blue/90 text-white h-14 sm:h-16 px-6 sm:px-12 text-base sm:text-xl font-bold w-full sm:max-w-md shadow-2xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 -translate-x-full animate-[slide_3s_ease-in-out_infinite]"></div>
-                    <MessageCircle className="mr-2 h-5 w-5" />
-                    <span className="hidden sm:inline">GARANTIR ACESSO BETA GRATUITO</span>
-                    <span className="sm:hidden">ACESSO BETA GRATUITO</span>
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                  
-                  <p className="text-xs sm:text-sm text-muted-foreground max-w-sm mx-auto">
-                    🎯 <strong>Sem compromisso</strong> • Teste completo da IA • Protocolos personalizados instantâneos
-                  </p>
-                </div>
-                
                 <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
                   Seja um dos primeiros a testar nossa 
                   <span className="text-pharma-blue font-semibold"> IA especializada em suplementação</span>
+                </p>
+              </div>
+
+              {/* CTA Principal DESTACADO */}
+              <div className="space-y-3 py-4">
+                <Button 
+                  size="lg"
+                  onClick={() => setAssistantOpen(true)}
+                  className="bg-gradient-to-r from-pharma-navy to-pharma-blue hover:from-pharma-navy/90 hover:to-pharma-blue/90 text-white h-16 sm:h-18 px-8 sm:px-16 text-lg sm:text-xl font-bold w-full max-w-lg mx-auto shadow-2xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 -translate-x-full animate-[slide_3s_ease-in-out_infinite]"></div>
+                  <MessageCircle className="mr-3 h-6 w-6" />
+                  <span className="hidden sm:inline">GARANTIR ACESSO BETA GRATUITO</span>
+                  <span className="sm:hidden">ACESSO BETA GRATUITO</span>
+                  <ArrowRight className="ml-3 h-5 w-5" />
+                </Button>
+                
+                <p className="text-xs sm:text-sm text-muted-foreground max-w-sm mx-auto">
+                  🎯 <strong>Sem compromisso</strong> • Teste completo da IA • Protocolos personalizados instantâneos
                 </p>
               </div>
 
@@ -123,7 +123,7 @@ export function HeroSection() {
             </div>
 
             {/* Features Principais Compactas */}
-            <div className="w-full max-w-4xl">
+            <div className="w-full max-w-4xl pt-4">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="group flex flex-col items-center gap-3 p-4 rounded-xl bg-gradient-to-br from-background to-pharma-light/30 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                   <div className="w-10 h-10 bg-gradient-to-br from-pharma-blue/20 to-pharma-blue/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
