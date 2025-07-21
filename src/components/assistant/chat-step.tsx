@@ -188,45 +188,45 @@ PERFIL:
         </div>
       </ScrollArea>
 
-      {/* Barra Inferior Fixa - Apenas Ações Essenciais */}
-      <div className="flex-shrink-0 border-t bg-background p-3 sm:p-4 safe-bottom">
-        <div className="space-y-3">
-          {/* Informações dos Produtos */}
-          <div className="bg-pharma-navy/10 border border-pharma-blue/20 rounded-lg p-3 sm:p-4">
-            <div className="text-center space-y-2">
-              <h3 className="text-sm sm:text-base font-bold text-pharma-blue">
+      {/* Barra Inferior Fixa - Design Minimalista */}
+      <div className="flex-shrink-0 border-t bg-background/95 backdrop-blur-sm p-2 safe-bottom">
+        <div className="space-y-1.5">
+          {/* Informações dos Produtos - Compacta */}
+          <div className="bg-muted/30 border border-border/50 rounded-md px-3 py-2">
+            <div className="text-center space-y-1">
+              <h3 className="text-xs font-semibold text-pharma-blue">
                 Produtos Disponíveis na Loja Oficial
               </h3>
-              <p className="text-xs sm:text-sm text-muted-foreground">
-                ✅ Produtos originais • ✅ Entrega discreta • ✅ Qualidade garantida
+              <p className="text-xs text-muted-foreground">
+                ✅ Originais • ✅ Entrega discreta • ✅ Qualidade garantida
               </p>
             </div>
           </div>
           
-          {/* Botões de Ação */}
-          <div className="flex flex-col gap-2">
+          {/* Botões de Ação - Compactos */}
+          <div className="flex gap-1.5">
             <Button
               onClick={onNewConsultation}
               variant="outline"
-              className="w-full text-sm sm:text-base touch-target border-pharma-blue text-pharma-blue hover:bg-pharma-blue hover:text-white"
-              size="lg"
+              className="flex-1 text-xs touch-target border-pharma-blue text-pharma-blue hover:bg-pharma-blue hover:text-white"
+              size="sm"
             >
-              <RotateCcw className="h-4 w-4 mr-2" />
+              <RotateCcw className="h-3 w-3 mr-1.5" />
               Novo Protocolo
             </Button>
             
             <Button
               onClick={() => window.open('https://www.loja.imperiopharma.com.py', '_blank')}
-              className="bg-pharma-blue text-white hover:bg-pharma-blue/90 w-full text-sm sm:text-base touch-target"
-              size="lg"
+              className="flex-1 bg-pharma-blue text-white hover:bg-pharma-blue/90 text-xs touch-target"
+              size="sm"
             >
-              <ShoppingCart className="h-4 w-4 mr-2" />
+              <ShoppingCart className="h-3 w-3 mr-1.5" />
               Comprar Produtos
             </Button>
           </div>
           
-          <p className="text-xs text-center text-muted-foreground">
-            Dúvidas? Entre em contato pelo WhatsApp da loja oficial
+          <p className="text-xs text-center text-muted-foreground/70">
+            Dúvidas? WhatsApp da loja oficial
           </p>
         </div>
       </div>
