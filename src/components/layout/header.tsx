@@ -50,10 +50,10 @@ export function Header() {
             <Button 
               onClick={() => window.open('https://www.loja.imperiopharma.com.py', '_blank')}
               size="sm"
-              className="bg-gradient-to-r from-pharma-navy to-pharma-blue hover:from-pharma-navy/90 hover:to-pharma-blue/90 text-white shadow-lg transition-all duration-200 hover:scale-105"
+              className="bg-gradient-to-r from-pharma-navy to-pharma-blue hover:from-pharma-navy/90 hover:to-pharma-blue/90 text-white shadow-lg transition-all duration-200 hover:scale-105 flex items-center justify-center"
             >
-              <Store className="h-4 w-4 mr-2 flex-shrink-0" />
-              <span className="hidden sm:inline">Explorar Loja</span>
+              <Store className="h-4 w-4 flex-shrink-0" />
+              <span className="ml-2">LOJA</span>
             </Button>
           </div>
         </div>
