@@ -32,14 +32,13 @@ export function ChatStep({ profileData, onNewConsultation }: ChatStepProps) {
 
   useEffect(() => {
     generateSuggestion();
-  }, [profileData]); // Adicionado profileData como dependência para regerar se o perfil mudar
+  }, [profileData]);
 
   const generateSuggestion = async () => {
     setIsLoading(true);
     setError("");
     
     try {
-      // Instruções do sistema com BASE DE CONHECIMENTO DE DOSAGENS
       const systemInstructions = `
 Você é um especialista em protocolos farmacológicos ergogênicos chamado "Assistente Maromba". Sua personalidade é técnica, precisa e focada em segurança. Sua tarefa é analisar o perfil do usuário, a lista de compostos e a base de conhecimento de dosagens para criar protocolos ergogênicos estruturados e realistas.
 
@@ -77,7 +76,6 @@ Você é um especialista em protocolos farmacológicos ergogênicos chamado "Ass
 5. **FORMATAÇÃO PROFISSIONAL:** Use Markdown estruturado.
       `;
 
-      // Filtra a lista de produtos com base na preferência do usuário
       let availableProducts = realProducts;
       if (profileData.preference.toLowerCase() === 'oral') {
           availableProducts = realProducts.filter(p => p.type === 'Oral');
@@ -99,8 +97,7 @@ PERFIL CLÍNICO DO USUÁRIO:
 
       const fullPrompt = `${systemInstructions}\n\n${userProfile}\n\n${productsList}`;
 
-      // --- IMPLEMENTAÇÃO REAL DA API ---
-      const apiKey = "AIzaSyBAAMbYYD5UbnXbO2wwJs88S2FY0-HmxlY"; // Chave da API
+      const apiKey = "AIzaSyBAAMbYYD5UbnXbO2wwJs88S2FY0-HmxlY";
       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
       
       const apiResponse = await fetch(apiUrl, {
@@ -136,14 +133,14 @@ PERFIL CLÍNICO DO USUÁRIO:
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
-      {/* Header Fixo */}
-      <div className="flex-shrink-0 border-b p-4 bg-background">
+      {/* Header Fixo - Mobile Optimized */}
+      <div className="flex-shrink-0 border-b p-3 sm:p-4 bg-background">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-semibold text-foreground">
+            <h2 className="text-base sm:text-lg font-semibold text-foreground">
               Assistente Maromba
             </h2>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs sm:text-sm text-muted-foreground">
               Protocolo Gerado por IA
             </p>
           </div>
@@ -151,79 +148,80 @@ PERFIL CLÍNICO DO USUÁRIO:
             variant="outline"
             size="sm"
             onClick={onNewConsultation}
-            className="gap-2"
+            className="gap-1 sm:gap-2 text-xs sm:text-sm touch-target"
           >
-            <RotateCcw className="h-4 w-4" />
-            Nova Consulta
+            <RotateCcw className="h-3 w-3 sm:h-4 sm:w-4" />
+            <span className="hidden sm:inline">Nova Consulta</span>
+            <span className="sm:hidden">Nova</span>
           </Button>
         </div>
       </div>
 
-      {/* Área de Chat com Rolagem */}
-      <ScrollArea className="flex-grow p-4">
-        <div className="space-y-4">
+      {/* Área de Chat com Rolagem - Mobile Optimized */}
+      <ScrollArea className="flex-grow p-3 sm:p-4">
+        <div className="space-y-3 sm:space-y-4">
           {isLoading ? (
-            <div className="flex items-center justify-center py-8">
-              <div className="text-center space-y-3">
-                <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto" />
-                <p className="text-muted-foreground">
+            <div className="flex items-center justify-center py-6 sm:py-8">
+              <div className="text-center space-y-2 sm:space-y-3">
+                <Loader2 className="h-6 w-6 sm:h-8 sm:w-8 animate-spin text-primary mx-auto" />
+                <p className="text-muted-foreground text-xs sm:text-sm px-4">
                   Calculando protocolos ergogênicos personalizados...
                 </p>
               </div>
             </div>
           ) : error ? (
-            <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
-              <p className="text-destructive text-center font-medium">{error}</p>
+            <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-3 sm:p-4">
+              <p className="text-destructive text-center font-medium text-xs sm:text-sm">{error}</p>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={generateSuggestion}
-                className="mx-auto mt-3 flex gap-2"
+                className="mx-auto mt-2 sm:mt-3 flex gap-1 sm:gap-2 text-xs touch-target"
               >
-                <RotateCcw className="h-4 w-4" />
+                <RotateCcw className="h-3 w-3 sm:h-4 sm:w-4" />
                 Tentar Novamente
               </Button>
             </div>
            ) : (
-            <div className="space-y-6">
-              <div className="bg-card border rounded-lg p-6">
-                <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-                  <p className="text-sm text-amber-800 font-medium">
+            <div className="space-y-4 sm:space-y-6">
+              <div className="bg-card border rounded-lg p-4 sm:p-6">
+                <div className="mb-3 sm:mb-4 p-2 sm:p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                  <p className="text-xs sm:text-sm text-amber-800 font-medium">
                     ⚠️ **AVISO MÉDICO:** Este protocolo é meramente educacional. Consulte sempre um endocrinologista especializado antes de iniciar qualquer protocolo ergogênico.
                   </p>
                 </div>
                 <div 
-                  className="prose prose-sm max-w-none prose-headings:text-foreground prose-p:text-muted-foreground"
+                  className="prose prose-xs sm:prose-sm max-w-none prose-headings:text-foreground prose-p:text-muted-foreground"
                   dangerouslySetInnerHTML={{ __html: response }}
                 />
               </div>
 
-              {/* CTAs para Compra */}
-              <div className="bg-pharma-navy/10 border border-pharma-gold/20 rounded-lg p-6 space-y-4">
-                <div className="text-center space-y-2">
-                  <h3 className="text-lg font-bold text-pharma-gold">Produtos Recomendados Disponíveis</h3>
-                  <p className="text-sm text-muted-foreground">
+              {/* CTAs para Compra - Mobile Optimized */}
+              <div className="bg-pharma-navy/10 border border-pharma-blue/20 rounded-lg p-4 sm:p-6 space-y-3 sm:space-y-4">
+                <div className="text-center space-y-1 sm:space-y-2">
+                  <h3 className="text-base sm:text-lg font-bold text-pharma-blue">Produtos Recomendados Disponíveis</h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground">
                     Encontre os produtos mencionados no seu protocolo na nossa loja oficial
                   </p>
                 </div>
                 
-                <div className="flex flex-col sm:flex-row gap-3">
+                <div className="flex flex-col gap-2 sm:gap-3">
                   <Button 
                     onClick={() => window.open('https://www.loja.imperiopharma.com.py', '_blank')}
-                    className="bg-pharma-gold text-pharma-navy hover:bg-pharma-gold/90 flex-1"
+                    className="bg-pharma-blue text-white hover:bg-pharma-blue/90 w-full text-sm sm:text-base touch-target"
                     size="lg"
                   >
-                    <ShoppingCart className="h-5 w-5 mr-2" />
+                    <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                     Comprar Produtos do Protocolo
                   </Button>
                   
                   <Button 
                     onClick={() => window.open('https://www.loja.imperiopharma.com.py', '_blank')}
                     variant="outline"
-                    className="border-pharma-gold text-pharma-gold hover:bg-pharma-gold hover:text-pharma-navy flex-1"
+                    className="border-pharma-blue text-pharma-blue hover:bg-pharma-blue hover:text-white w-full text-sm sm:text-base touch-target"
                     size="lg"
                   >
-                    <ExternalLink className="h-5 w-5 mr-2" />
+                    <ExternalLink className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                     Ver Loja Completa
                   </Button>
                 </div>
@@ -239,13 +237,13 @@ PERFIL CLÍNICO DO USUÁRIO:
         </div>
       </ScrollArea>
 
-      {/* Footer Fixo */}
-      <div className="flex-shrink-0 border-t p-4 bg-background space-y-3">
-        <div className="flex flex-col sm:flex-row gap-2">
+      {/* Footer Fixo - Mobile Optimized */}
+      <div className="flex-shrink-0 border-t p-3 sm:p-4 bg-background space-y-2 sm:space-y-3 safe-bottom">
+        <div className="flex flex-col gap-2">
           <Button
             onClick={onNewConsultation}
             variant="outline"
-            className="flex-1"
+            className="w-full text-sm sm:text-base touch-target"
             size="lg"
           >
             <RotateCcw className="h-4 w-4 mr-2" />
@@ -254,7 +252,7 @@ PERFIL CLÍNICO DO USUÁRIO:
           
           <Button
             onClick={() => window.open('https://www.loja.imperiopharma.com.py', '_blank')}
-            className="bg-pharma-gold text-pharma-navy hover:bg-pharma-gold/90 flex-1"
+            className="bg-pharma-blue text-white hover:bg-pharma-blue/90 w-full text-sm sm:text-base touch-target"
             size="lg"
           >
             <ShoppingCart className="h-4 w-4 mr-2" />

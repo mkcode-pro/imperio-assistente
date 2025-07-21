@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -12,8 +13,12 @@ export default {
 	theme: {
 		container: {
 			center: true,
-			padding: '2rem',
+			padding: '1rem',
 			screens: {
+				'sm': '640px',
+				'md': '768px',
+				'lg': '1024px',
+				'xl': '1280px',
 				'2xl': '1400px'
 			}
 		},
@@ -52,19 +57,14 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Cores personalizadas do Império Pharma
+				// Cores personalizadas do Império Pharma - apenas azul e branco
 				pharma: {
 					navy: 'hsl(var(--pharma-navy))',
 					'navy-foreground': 'hsl(var(--pharma-navy-foreground))',
 					blue: 'hsl(var(--pharma-blue))',
 					'blue-foreground': 'hsl(var(--pharma-blue-foreground))',
-					gold: 'hsl(var(--pharma-gold))',
-					'gold-foreground': 'hsl(var(--pharma-gold-foreground))',
-					red: 'hsl(var(--pharma-red))',
-					'red-foreground': 'hsl(var(--pharma-red-foreground))',
 					light: 'hsl(var(--pharma-light))',
-					dark: 'hsl(var(--pharma-dark))',
-					'dark-blue': 'hsl(var(--pharma-dark-blue))'
+					dark: 'hsl(var(--pharma-dark))'
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
@@ -96,6 +96,10 @@ export default {
 			transitionProperty: {
 				'all': 'var(--transition-all)',
 				'transform': 'var(--transition-transform)'
+			},
+			spacing: {
+				'safe-top': 'env(safe-area-inset-top)',
+				'safe-bottom': 'env(safe-area-inset-bottom)',
 			},
 			keyframes: {
 				'accordion-down': {
