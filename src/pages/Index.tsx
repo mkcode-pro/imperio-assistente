@@ -1,20 +1,18 @@
-import { Header } from "@/components/layout/header";
+
 import { HeroSection } from "@/components/sections/hero-section";
+import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 
-export default function Index() {
+const Index = () => {
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen bg-background flex flex-col">
       <Header />
-      
-      <main className="w-full">
+      <main className="flex-1">
         <HeroSection />
       </main>
-      
       <Footer />
-      
-      {/* Faixa inferior com gradiente do Paraguai */}
-      <div className="h-2 bg-paraguay-bottom fixed bottom-0 left-0 right-0 z-40"></div>
     </div>
   );
-}
+};
+
+export default Index;
