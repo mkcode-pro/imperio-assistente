@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Loader2, RotateCcw } from "lucide-react";
+import { Loader2, RotateCcw, ExternalLink, ShoppingCart } from "lucide-react";
 import { marked } from "marked";
 import type { ProfileData } from "./profile-form-step";
 
@@ -184,31 +184,87 @@ PERFIL CLÍNICO DO USUÁRIO:
                 Tentar Novamente
               </Button>
             </div>
-          ) : (
-            <div className="bg-card border rounded-lg p-6">
-               <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+           ) : (
+            <div className="space-y-6">
+              <div className="bg-card border rounded-lg p-6">
+                <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
                   <p className="text-sm text-amber-800 font-medium">
                     ⚠️ **AVISO MÉDICO:** Este protocolo é meramente educacional. Consulte sempre um endocrinologista especializado antes de iniciar qualquer protocolo ergogênico.
                   </p>
                 </div>
-              <div 
-                className="prose prose-sm max-w-none prose-headings:text-foreground prose-p:text-muted-foreground"
-                dangerouslySetInnerHTML={{ __html: response }}
-              />
+                <div 
+                  className="prose prose-sm max-w-none prose-headings:text-foreground prose-p:text-muted-foreground"
+                  dangerouslySetInnerHTML={{ __html: response }}
+                />
+              </div>
+
+              {/* CTAs para Compra */}
+              <div className="bg-pharma-navy/10 border border-pharma-gold/20 rounded-lg p-6 space-y-4">
+                <div className="text-center space-y-2">
+                  <h3 className="text-lg font-bold text-pharma-gold">Produtos Recomendados Disponíveis</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Encontre os produtos mencionados no seu protocolo na nossa loja oficial
+                  </p>
+                </div>
+                
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Button 
+                    onClick={() => window.open('https://www.loja.imperiopharma.com.py', '_blank')}
+                    className="bg-pharma-gold text-pharma-navy hover:bg-pharma-gold/90 flex-1"
+                    size="lg"
+                  >
+                    <ShoppingCart className="h-5 w-5 mr-2" />
+                    Comprar Produtos do Protocolo
+                  </Button>
+                  
+                  <Button 
+                    onClick={() => window.open('https://www.loja.imperiopharma.com.py', '_blank')}
+                    variant="outline"
+                    className="border-pharma-gold text-pharma-gold hover:bg-pharma-gold hover:text-pharma-navy flex-1"
+                    size="lg"
+                  >
+                    <ExternalLink className="h-5 w-5 mr-2" />
+                    Ver Loja Completa
+                  </Button>
+                </div>
+                
+                <div className="text-center">
+                  <p className="text-xs text-muted-foreground">
+                    ✅ Produtos originais • ✅ Entrega discreta • ✅ Qualidade garantida
+                  </p>
+                </div>
+              </div>
             </div>
           )}
         </div>
       </ScrollArea>
 
       {/* Footer Fixo */}
-      <div className="flex-shrink-0 border-t p-4 bg-background">
-        <Button
-          onClick={onNewConsultation}
-          className="w-full"
-          size="lg"
-        >
-          Calcular Novo Protocolo
-        </Button>
+      <div className="flex-shrink-0 border-t p-4 bg-background space-y-3">
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Button
+            onClick={onNewConsultation}
+            variant="outline"
+            className="flex-1"
+            size="lg"
+          >
+            <RotateCcw className="h-4 w-4 mr-2" />
+            Novo Protocolo
+          </Button>
+          
+          <Button
+            onClick={() => window.open('https://www.loja.imperiopharma.com.py', '_blank')}
+            className="bg-pharma-gold text-pharma-navy hover:bg-pharma-gold/90 flex-1"
+            size="lg"
+          >
+            <ShoppingCart className="h-4 w-4 mr-2" />
+            Comprar Agora
+          </Button>
+        </div>
+        
+        <p className="text-xs text-center text-muted-foreground">
+          Dúvidas? Entre em contato pelo WhatsApp da loja oficial
+        </p>
       </div>
     </div>
   );

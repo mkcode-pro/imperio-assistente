@@ -1,115 +1,112 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Zap, Clock } from "lucide-react";
+import { MessageCircle, Zap, ExternalLink, Brain, Sparkles } from "lucide-react";
 import { AssistantModal } from "@/components/assistant/assistant-modal";
+
 export function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [timeLeft, setTimeLeft] = useState({
-    hours: 23,
-    minutes: 59,
-    seconds: 59
-  });
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(prev => {
-        if (prev.seconds > 0) {
-          return {
-            ...prev,
-            seconds: prev.seconds - 1
-          };
-        } else if (prev.minutes > 0) {
-          return {
-            ...prev,
-            minutes: prev.minutes - 1,
-            seconds: 59
-          };
-        } else if (prev.hours > 0) {
-          return {
-            hours: prev.hours - 1,
-            minutes: 59,
-            seconds: 59
-          };
-        }
-        return {
-          hours: 23,
-          minutes: 59,
-          seconds: 59
-        };
-      });
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
+
   const handleChatClick = () => {
     setIsModalOpen(true);
   };
-  return <section className="bg-pharma-dark-blue text-white pt-16 pb-8 px-4 relative overflow-hidden">
-      {/* Urgency Banner */}
-      <div className="bg-destructive text-destructive-foreground py-2 px-4 mb-4">
-        <div className="container mx-auto flex items-center justify-center gap-2 text-sm font-medium">
-          <Zap className="h-4 w-4 animate-pulse" />
-          <span className="hidden sm:inline">OFERTA RELÂMPAGO:</span>
-          <span>TEMPO LIMITADO</span>
-          <div className="flex items-center gap-1 ml-2">
-            <Clock className="h-4 w-4" />
-            <span className="font-mono">
-              {String(timeLeft.hours).padStart(2, '0')}:
-              {String(timeLeft.minutes).padStart(2, '0')}:
-              {String(timeLeft.seconds).padStart(2, '0')}
-            </span>
-          </div>
-        </div>
-      </div>
 
-      <div className="container mx-auto">
-        <div className="text-center space-y-4">
-          <div className="inline-flex items-center gap-2 bg-pharma-gold/20 text-pharma-gold px-4 py-2 rounded-full text-sm font-medium">
-            <Zap className="h-4 w-4" />
-            PROMOÇÃO ESPECIAL
+  const goToStore = () => {
+    window.open('https://www.loja.imperiopharma.com.py', '_blank');
+  };
+
+  return (
+    <section className="bg-hero-gradient text-white min-h-screen pt-8 pb-16 px-4 relative overflow-hidden">
+      <div className="container mx-auto max-w-4xl">
+        <div className="text-center space-y-8">
+          {/* Badge de IA */}
+          <div className="inline-flex items-center gap-2 bg-pharma-gold/20 text-pharma-gold px-6 py-3 rounded-full text-sm font-medium border border-pharma-gold/30">
+            <Brain className="h-5 w-5" />
+            INTELIGÊNCIA ARTIFICIAL AVANÇADA
+            <Sparkles className="h-4 w-4" />
           </div>
           
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight">
-            <span className="text-pharma-gold">BOT INTELIGENTE</span> com IA
-          </h1>
-          
-          
-          
-          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center pt-2">
-            <Button onClick={handleChatClick} size="lg" className="bg-pharma-gold text-pharma-dark-blue hover:bg-pharma-gold/90 shadow-button text-base px-6 py-3 h-auto w-full sm:w-auto font-semibold">
-              <MessageCircle className="mr-2 h-5 w-5" />
-              MONTE SEU PROTOCOLO
-            </Button>
+          {/* Título Principal */}
+          <div className="space-y-4">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
+              <span className="text-white">ASSISTENTE</span><br />
+              <span className="text-pharma-gold">MAROMBA IA</span>
+            </h1>
             
-            <div className="flex items-center gap-4 text-sm">
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 bg-pharma-gold rounded-full"></div>
-                <span>Entrega Discreta</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 bg-pharma-gold rounded-full"></div>
-                <span>Qualidade Garantida</span>
-              </div>
+            <p className="text-xl sm:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+              Protocolos Ergogênicos Personalizados por Inteligência Artificial
+            </p>
+            
+            <p className="text-lg text-white/80 max-w-2xl mx-auto">
+              Nossa IA analisa seu perfil e objetivos para criar protocolos únicos e eficazes, 
+              baseados em ciência e experiência profissional.
+            </p>
+          </div>
+
+          {/* Imagem do Robô */}
+          <div className="my-12">
+            <div className="relative w-64 h-64 mx-auto">
+              <div className="absolute inset-0 bg-pharma-gold/20 rounded-full animate-pulse"></div>
+              <img 
+                src="/src/assets/robozinho-maromba.png" 
+                alt="Assistente Maromba IA" 
+                className="relative z-10 w-full h-full object-cover rounded-full border-4 border-pharma-gold/50"
+              />
             </div>
           </div>
 
-          <div className="mt-8 text-center">
-            <h2 className="text-xl sm:text-2xl font-bold text-pharma-gold mb-2">
-              Conheça o Assistente Maromba!
-            </h2>
-            <p className="text-white/90 mb-4">
-              Sua nova ferramenta de IA para criar protocolos com base em seus objetivos.
-            </p>
-            <div className="rounded-lg h-48 w-48 mx-auto my-4 flex items-center justify-center overflow-hidden">
-              <img 
-                src="/src/assets/robozinho-maromba.png" 
-                alt="Robô Maromba - Assistente IA" 
-                className="w-full h-full object-cover rounded-lg"
-              />
+          {/* CTAs Principais */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+            <Button 
+              onClick={handleChatClick} 
+              size="lg" 
+              className="bg-pharma-gold text-pharma-navy hover:bg-pharma-gold/90 shadow-lg text-lg px-8 py-4 h-auto w-full sm:w-auto font-bold transform hover:scale-105 transition-all"
+            >
+              <MessageCircle className="mr-3 h-6 w-6" />
+              INICIAR CONSULTA GRATUITA
+            </Button>
+            
+            <Button 
+              onClick={goToStore}
+              variant="outline"
+              size="lg"
+              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-pharma-navy text-lg px-8 py-4 h-auto w-full sm:w-auto font-semibold transition-all"
+            >
+              <ExternalLink className="mr-3 h-5 w-5" />
+              Comprar na Loja Oficial
+            </Button>
+          </div>
+
+          {/* Features */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 text-center">
+            <div className="space-y-3">
+              <div className="w-12 h-12 bg-pharma-gold/20 rounded-full flex items-center justify-center mx-auto">
+                <Brain className="h-6 w-6 text-pharma-gold" />
+              </div>
+              <h3 className="text-lg font-semibold text-pharma-gold">IA Especializada</h3>
+              <p className="text-white/80 text-sm">Treinada com dados de profissionais experientes</p>
+            </div>
+            
+            <div className="space-y-3">
+              <div className="w-12 h-12 bg-pharma-gold/20 rounded-full flex items-center justify-center mx-auto">
+                <Zap className="h-6 w-6 text-pharma-gold" />
+              </div>
+              <h3 className="text-lg font-semibold text-pharma-gold">Resultados Rápidos</h3>
+              <p className="text-white/80 text-sm">Protocolo personalizado em poucos minutos</p>
+            </div>
+            
+            <div className="space-y-3">
+              <div className="w-12 h-12 bg-pharma-gold/20 rounded-full flex items-center justify-center mx-auto">
+                <Sparkles className="h-6 w-6 text-pharma-gold" />
+              </div>
+              <h3 className="text-lg font-semibold text-pharma-gold">100% Personalizado</h3>
+              <p className="text-white/80 text-sm">Baseado no seu perfil e objetivos únicos</p>
             </div>
           </div>
         </div>
       </div>
       
       <AssistantModal open={isModalOpen} onOpenChange={setIsModalOpen} />
-    </section>;
+    </section>
+  );
 }

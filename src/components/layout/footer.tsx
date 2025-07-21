@@ -1,43 +1,91 @@
+import { ExternalLink, Mail, Phone, MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
 export function Footer() {
+  const goToStore = () => {
+    window.open('https://www.loja.imperiopharma.com.py', '_blank');
+  };
+
   return (
-    <footer className="bg-pharma-dark-blue text-white py-8 px-4">
-      <div className="container mx-auto">
+    <footer className="bg-pharma-navy text-white py-12 px-4">
+      <div className="container mx-auto max-w-6xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Logo e descrição */}
+          {/* Sobre o Assistente */}
           <div className="space-y-4">
-            <h3 className="text-xl font-bold">Império Pharma</h3>
-            <p className="text-white/80 text-sm">
-              Sua farmácia de suplementos com o melhor atendimento e produtos de qualidade.
+            <h3 className="text-lg font-bold text-pharma-gold">Assistente Maromba IA</h3>
+            <p className="text-white/80 text-sm leading-relaxed">
+              Desenvolvido pela Império Pharma para oferecer protocolos ergogênicos 
+              personalizados através de inteligência artificial avançada.
             </p>
+            <Button 
+              onClick={goToStore}
+              variant="outline"
+              size="sm"
+              className="bg-transparent border-pharma-gold text-pharma-gold hover:bg-pharma-gold hover:text-pharma-navy"
+            >
+              <ExternalLink className="h-4 w-4 mr-2" />
+              Visitar Loja Oficial
+            </Button>
           </div>
 
-          {/* Links úteis */}
+          {/* Contato */}
           <div className="space-y-4">
-            <h4 className="font-semibold">Links Úteis</h4>
-            <ul className="space-y-2 text-sm text-white/80">
-              <li><a href="#" className="hover:text-pharma-gold transition-colors">Sobre Nós</a></li>
-              <li><a href="#" className="hover:text-pharma-gold transition-colors">Contato</a></li>
-              <li><a href="#" className="hover:text-pharma-gold transition-colors">Política de Privacidade</a></li>
-              <li><a href="#" className="hover:text-pharma-gold transition-colors">Termos de Uso</a></li>
-            </ul>
+            <h3 className="text-lg font-bold text-pharma-gold">Contato</h3>
+            <div className="space-y-3 text-sm">
+              <div className="flex items-center gap-2 text-white/80">
+                <Mail className="h-4 w-4 text-pharma-gold" />
+                contato@imperiopharma.com.py
+              </div>
+              <div className="flex items-center gap-2 text-white/80">
+                <Phone className="h-4 w-4 text-pharma-gold" />
+                +595 (21) 123-4567
+              </div>
+              <div className="flex items-center gap-2 text-white/80">
+                <MapPin className="h-4 w-4 text-pharma-gold" />
+                Asunción, Paraguay
+              </div>
+            </div>
           </div>
 
-          {/* Atendimento */}
+          {/* Links Úteis */}
           <div className="space-y-4">
-            <h4 className="font-semibold">Atendimento</h4>
-            <ul className="space-y-2 text-sm text-white/80">
-              <li>📞 (11) 9999-9999</li>
-              <li>📧 contato@imperiopharma.com.br</li>
-              <li>⏰ Seg-Sex: 8h às 18h</li>
-              <li>⏰ Sáb: 8h às 14h</li>
-            </ul>
+            <h3 className="text-lg font-bold text-pharma-gold">Links Úteis</h3>
+            <div className="space-y-2 text-sm">
+              <button 
+                onClick={goToStore}
+                className="block text-white/80 hover:text-pharma-gold transition-colors"
+              >
+                Loja Online
+              </button>
+              <button 
+                onClick={goToStore}
+                className="block text-white/80 hover:text-pharma-gold transition-colors"
+              >
+                Produtos
+              </button>
+              <button 
+                onClick={goToStore}
+                className="block text-white/80 hover:text-pharma-gold transition-colors"
+              >
+                Suporte
+              </button>
+              <button 
+                onClick={goToStore}
+                className="block text-white/80 hover:text-pharma-gold transition-colors"
+              >
+                Política de Privacidade
+              </button>
+            </div>
           </div>
         </div>
 
-        <hr className="my-6 border-white/20" />
-        
-        <div className="text-center text-sm text-white/60">
-          <p>&copy; 2024 Império Pharma. Todos os direitos reservados.</p>
+        <div className="border-t border-white/20 mt-8 pt-8 text-center">
+          <p className="text-white/60 text-sm">
+            © 2024 Império Pharma. Todos os direitos reservados. | Assistente IA - Versão Beta
+          </p>
+          <p className="text-white/40 text-xs mt-2">
+            Este assistente é uma ferramenta educacional. Sempre consulte um profissional qualificado.
+          </p>
         </div>
       </div>
     </footer>

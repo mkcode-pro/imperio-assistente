@@ -52,16 +52,19 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Cores personalizadas do Império Farma
+				// Cores personalizadas do Império Pharma
 				pharma: {
-					yellow: 'hsl(var(--pharma-yellow))',
-					'yellow-foreground': 'hsl(var(--pharma-yellow-foreground))',
+					navy: 'hsl(var(--pharma-navy))',
+					'navy-foreground': 'hsl(var(--pharma-navy-foreground))',
+					blue: 'hsl(var(--pharma-blue))',
+					'blue-foreground': 'hsl(var(--pharma-blue-foreground))',
+					gold: 'hsl(var(--pharma-gold))',
+					'gold-foreground': 'hsl(var(--pharma-gold-foreground))',
 					red: 'hsl(var(--pharma-red))',
 					'red-foreground': 'hsl(var(--pharma-red-foreground))',
-					dark: 'hsl(var(--pharma-dark))',
-					'dark-blue': 'hsl(var(--pharma-dark-blue))',
 					light: 'hsl(var(--pharma-light))',
-					gold: 'hsl(var(--pharma-gold))'
+					dark: 'hsl(var(--pharma-dark))',
+					'dark-blue': 'hsl(var(--pharma-dark-blue))'
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
@@ -81,7 +84,9 @@ export default {
 			},
 			backgroundImage: {
 				'hero-gradient': 'var(--gradient-hero)',
-				'card-gradient': 'var(--gradient-card)'
+				'card-gradient': 'var(--gradient-card)',
+				'paraguay-top': 'var(--gradient-paraguay-top)',
+				'paraguay-bottom': 'var(--gradient-paraguay-bottom)'
 			},
 			boxShadow: {
 				'card': 'var(--shadow-card)',

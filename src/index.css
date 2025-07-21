@@ -39,20 +39,25 @@
 
     --radius: 0.75rem;
 
-    /* Cores personalizadas do Império Pharma */
-    --pharma-yellow: 45 95% 55%;
-    --pharma-yellow-foreground: 215 25% 27%;
-    --pharma-red: 0 84% 60%;
+    /* Cores personalizadas baseadas na loja atual - Imperio Pharma */
+    --pharma-navy: 210 50% 15%;
+    --pharma-navy-foreground: 0 0% 100%;
+    --pharma-blue: 210 80% 25%;
+    --pharma-blue-foreground: 0 0% 100%;
+    --pharma-gold: 45 95% 60%;
+    --pharma-gold-foreground: 210 50% 15%;
+    --pharma-red: 355 85% 55%;
     --pharma-red-foreground: 0 0% 100%;
-    --pharma-dark: 215 25% 27%;
-    --pharma-dark-blue: 215 25% 27%;
     --pharma-light: 220 14% 96%;
-    --pharma-green: 142 76% 36%;
-    --pharma-green-foreground: 0 0% 100%;
-    --pharma-gold: 45 95% 55%;
+    --pharma-dark: 210 50% 15%;
+    --pharma-dark-blue: 210 50% 15%;
+    
+    /* Gradientes inspirados na bandeira do Paraguai */
+    --gradient-paraguay-top: linear-gradient(90deg, hsl(0 85% 60%) 0%, hsl(0 0% 100%) 33%, hsl(210 80% 45%) 66%);
+    --gradient-paraguay-bottom: linear-gradient(90deg, hsl(210 80% 45%) 0%, hsl(0 0% 100%) 33%, hsl(0 85% 60%) 66%);
 
     /* Gradientes para seções de destaque */
-    --gradient-hero: linear-gradient(135deg, hsl(215 25% 27%) 0%, hsl(220 20% 20%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(210 50% 15%) 0%, hsl(210 40% 12%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(220 14% 98%) 100%);
 
     /* Sombras elegantes */
