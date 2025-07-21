@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -40,40 +41,35 @@ export function ChatStep({ profileData, onNewConsultation }: ChatStepProps) {
     
     try {
       const systemInstructions = `
-Você é um especialista em protocolos farmacológicos ergogênicos chamado "Assistente Maromba". Sua personalidade é técnica, precisa e focada em segurança. Sua tarefa é analisar o perfil do usuário, a lista de compostos e a base de conhecimento de dosagens para criar protocolos ergogênicos estruturados e realistas.
+Você é um especialista em protocolos ergogênicos. Responda EXCLUSIVAMENTE com opções de ciclos práticos, sem textos longos ou avisos.
 
-### Base de Conhecimento de Dosagens Seguras (OBRIGATÓRIO SEGUIR)
+### DOSAGENS SEGURAS:
 
-**Dosagens para Homens (Nível Intermediário):**
-- **Testosterona (Enantato/Cipionato):** 400-600mg/semana.
-- **Nandrolona (Deca):** 200-400mg/semana.
-- **Boldenona:** 400-600mg/semana.
-- **Masteron:** 300-400mg/semana.
-- **Primobolan:** 400-600mg/semana.
-- **Trembolona:** 150-300mg/semana.
-- **Dianabol:** 30-50mg/dia (usar por no máximo 4-6 semanas).
-- **Hemogenin:** 50-100mg/dia (usar por no máximo 4 semanas).
-- **Stanozolol:** 30-50mg/dia (usar por no máximo 6 semanas).
-- **Oxandrolona:** 40-80mg/dia.
+**HOMENS:**
+- Testosterona: 400-600mg/sem
+- Nandrolona: 200-400mg/sem  
+- Boldenona: 400-600mg/sem
+- Masteron: 300-400mg/sem
+- Primobolan: 400-600mg/sem
+- Trembolona: 150-300mg/sem
+- Dianabol: 30-50mg/dia (4-6 sem)
+- Hemogenin: 50-100mg/dia (4 sem)
+- Stanozolol: 30-50mg/dia (6 sem)
+- Oxandrolona: 40-80mg/dia
 
-**Dosagens para Mulheres (Foco em Baixa Virilização):**
-- **Oxandrolona:** 5-15mg/dia.
-- **Primobolan:** 50-100mg/semana.
-- **Stanozolol:** 5-10mg/dia (sempre alertar sobre riscos maiores que a oxandrolona).
-- **Hemogenin:** 12.5-25mg/dia (apenas para usuárias muito avançadas e alertar sobre altos riscos).
+**MULHERES:**
+- Oxandrolona: 5-15mg/dia
+- Primobolan: 50-100mg/sem
+- Stanozolol: 5-10mg/dia
+- Hemogenin: 12.5-25mg/dia (avançadas)
 
-### REGRAS CRÍTICAS PARA PERFIL FEMININO:
-1. **SEGUIR DOSAGENS FEMININAS:** Use estritamente as dosagens da base de conhecimento para mulheres.
-2. **COMPOSTOS APROVADOS (ÚNICOS PERMITIDOS):** Baseie protocolos EXCLUSIVAMENTE em: Oxandrolona, Primobolan, Stanozolol e Hemogenin.
-3. **COMPOSTOS PROIBIDOS:** É terminantemente proibido mencionar para mulheres: Testosterona, Trembolona, Dianabol, Boldenona.
-4. **PROTOCOLOS MÚLTIPLOS E VARIADOS:** Ofereça várias opções de ciclos, categorizando-as por intensidade.
-
-### REGRAS GERAIS PARA PROTOCOLOS:
-1. **SEGUIR DOSAGENS MASCULINAS:** Para homens, use estritamente as dosagens da base de conhecimento para homens.
-2. **BASEADO EXCLUSIVAMENTE NA LISTA:** Utilize APENAS os compostos da "lista de produtos disponíveis".
-3. **APRESENTAR VÁRIAS OPÇÕES:** Forneça um leque com as opções de protocolos mais comuns e eficazes para o perfil do usuário.
-4. **ESTRUTURA TÉCNICA OBRIGATÓRIA:** Apresentação, protocolos de 6-8 semanas, dosagens precisas (seguindo a base de conhecimento), ancilares e PCT detalhado.
-5. **FORMATAÇÃO PROFISSIONAL:** Use Markdown estruturado.
+### REGRAS:
+1. Use APENAS os compostos da lista disponível
+2. Para mulheres: APENAS Oxandrolona, Primobolan, Stanozolol, Hemogenin
+3. Apresente 3-4 opções categorizadas (Iniciante/Intermediário/Avançado)
+4. Máximo 150 palavras total
+5. Formato: **Nome do Ciclo** - Composto + dosagem + duração
+6. Sem PCT detalhado, sem avisos longos
       `;
 
       let availableProducts = realProducts;
@@ -84,15 +80,15 @@ Você é um especialista em protocolos farmacológicos ergogênicos chamado "Ass
       }
       
       const productsList = `
-LISTA DE COMPOSTOS FARMACOLÓGICOS DISPONÍVEIS:
+COMPOSTOS DISPONÍVEIS:
 ${availableProducts.map(p => `- ${p.name}`).join('\n')}
       `;
 
       const userProfile = `
-PERFIL CLÍNICO DO USUÁRIO:
-- Sexo Biológico: ${profileData.gender}
-- Objetivo do Protocolo: ${profileData.objective}
-- Via de Administração Preferencial: ${profileData.preference}
+PERFIL:
+- Sexo: ${profileData.gender}
+- Objetivo: ${profileData.objective}
+- Preferência: ${profileData.preference}
       `;
 
       const fullPrompt = `${systemInstructions}\n\n${userProfile}\n\n${productsList}`;
@@ -141,7 +137,7 @@ PERFIL CLÍNICO DO USUÁRIO:
               Assistente Maromba
             </h2>
             <p className="text-xs sm:text-sm text-muted-foreground">
-              Protocolo Gerado por IA
+              Opções de Ciclos
             </p>
           </div>
           <Button
@@ -165,7 +161,7 @@ PERFIL CLÍNICO DO USUÁRIO:
               <div className="text-center space-y-2 sm:space-y-3">
                 <Loader2 className="h-6 w-6 sm:h-8 sm:w-8 animate-spin text-primary mx-auto" />
                 <p className="text-muted-foreground text-xs sm:text-sm px-4">
-                  Calculando protocolos ergogênicos personalizados...
+                  Gerando opções de ciclos personalizados...
                 </p>
               </div>
             </div>
@@ -187,7 +183,7 @@ PERFIL CLÍNICO DO USUÁRIO:
               <div className="bg-card border rounded-lg p-4 sm:p-6">
                 <div className="mb-3 sm:mb-4 p-2 sm:p-3 bg-amber-50 border border-amber-200 rounded-lg">
                   <p className="text-xs sm:text-sm text-amber-800 font-medium">
-                    ⚠️ **AVISO MÉDICO:** Este protocolo é meramente educacional. Consulte sempre um endocrinologista especializado antes de iniciar qualquer protocolo ergogênico.
+                    ⚠️ Consulte um médico especializado antes de iniciar qualquer protocolo.
                   </p>
                 </div>
                 <div 
@@ -199,9 +195,9 @@ PERFIL CLÍNICO DO USUÁRIO:
               {/* CTAs para Compra - Mobile Optimized */}
               <div className="bg-pharma-navy/10 border border-pharma-blue/20 rounded-lg p-4 sm:p-6 space-y-3 sm:space-y-4">
                 <div className="text-center space-y-1 sm:space-y-2">
-                  <h3 className="text-base sm:text-lg font-bold text-pharma-blue">Produtos Recomendados Disponíveis</h3>
+                  <h3 className="text-base sm:text-lg font-bold text-pharma-blue">Produtos Disponíveis</h3>
                   <p className="text-xs sm:text-sm text-muted-foreground">
-                    Encontre os produtos mencionados no seu protocolo na nossa loja oficial
+                    Encontre os produtos dos ciclos na nossa loja oficial
                   </p>
                 </div>
                 
@@ -212,7 +208,7 @@ PERFIL CLÍNICO DO USUÁRIO:
                     size="lg"
                   >
                     <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
-                    Comprar Produtos do Protocolo
+                    Comprar Produtos
                   </Button>
                   
                   <Button 
