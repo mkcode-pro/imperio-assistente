@@ -29,17 +29,18 @@ export function Header() {
 
   return (
     <>
-      {/* Faixa de Urgência */}
+      {/* Faixa de Urgência Responsiva */}
       {bannerVisible && (
         <div className="bg-gradient-to-r from-pharma-navy via-pharma-blue to-pharma-navy text-white px-4 py-3 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"></div>
           <div className="container mx-auto flex items-center justify-center relative z-10">
-            <div className="flex items-center space-x-4 text-center">
-              <Zap className="h-5 w-5 text-yellow-300 animate-pulse" />
-              <span className="font-bold text-sm sm:text-base">
-                🚀 ACESSO BETA EXCLUSIVO • TEMPO LIMITADO • CONSULTAS GRATUITAS
+            <div className="flex items-center space-x-2 sm:space-x-4 text-center">
+              <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-300 flex-shrink-0" />
+              <span className="font-bold text-xs sm:text-sm lg:text-base">
+                <span className="hidden sm:inline">🚀 ACESSO BETA EXCLUSIVO • TEMPO LIMITADO • CONSULTAS GRATUITAS</span>
+                <span className="sm:hidden">🚀 BETA EXCLUSIVO • GRATUITO</span>
               </span>
-              <Zap className="h-5 w-5 text-yellow-300 animate-pulse" />
+              <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-300 flex-shrink-0" />
             </div>
             <button 
               onClick={closeBanner}
@@ -64,19 +65,19 @@ export function Header() {
               </div>
             </button>
             
-            {/* Breadcrumb com Badge */}
+            {/* Breadcrumb com Badge - Responsivo */}
             <div className="hidden sm:flex items-center space-x-2 text-sm">
               <span className="text-muted-foreground">Loja Principal</span>
               <span className="text-border">›</span>
               <span className="text-pharma-blue font-medium">Assistente IA</span>
-              <Badge className="ml-2 bg-pharma-blue/20 border-pharma-blue/30 text-pharma-blue hover:bg-pharma-blue/30 animate-pulse">
-                BETA EXCLUSIVO
+              <Badge className="ml-2 bg-pharma-blue/20 border-pharma-blue/30 text-pharma-blue hover:bg-pharma-blue/30 text-xs">
+                BETA
               </Badge>
             </div>
           </div>
 
           {/* Ações */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2 sm:space-x-3">
             {/* Botão Assistente */}
             <Button 
               variant="ghost" 
@@ -84,8 +85,9 @@ export function Header() {
               onClick={() => setAssistantOpen(true)}
               className="text-pharma-navy hover:text-pharma-blue hover:bg-pharma-blue/10 transition-all duration-200"
             >
-              <MessageCircle className="h-4 w-4 mr-2" />
+              <MessageCircle className="h-4 w-4 mr-1 sm:mr-2" />
               <span className="hidden sm:inline">Consulta Gratuita</span>
+              <span className="sm:hidden text-xs">Consulta</span>
             </Button>
 
             {/* Botão Loja */}
