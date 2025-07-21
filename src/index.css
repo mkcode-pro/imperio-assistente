@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -25,17 +25,17 @@
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
+    --radius: 0.75rem;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
 
-    /* Cores do tema Império Pharma */
+    /* Sistema de cores Império Pharma Premium */
     --pharma-navy: 220 45% 15%;     /* Azul escuro principal */
     --pharma-blue: 220 45% 35%;     /* Azul médio */
-    --pharma-light: 220 20% 95%;    /* Azul muito claro */
+    --pharma-light: 220 25% 97%;    /* Azul muito claro */
   }
 
   .dark {
@@ -75,18 +75,34 @@
   * {
     @apply border-border;
   }
+  
   body {
     @apply bg-background text-foreground font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  html {
+    scroll-behavior: smooth;
   }
 }
 
-/* Otimizações para mobile */
+/* Sistema de Design Premium */
 @layer utilities {
+  /* Touch e Mobile Optimization */
   .touch-manipulation {
     touch-action: manipulation;
   }
   
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Safe Areas para Mobile */
   .safe-top {
     padding-top: env(safe-area-inset-top);
   }
@@ -94,19 +110,140 @@
   .safe-bottom {
     padding-bottom: env(safe-area-inset-bottom);
   }
+  
+  .safe-left {
+    padding-left: env(safe-area-inset-left);
+  }
+  
+  .safe-right {
+    padding-right: env(safe-area-inset-right);
+  }
+  
+  /* Sistema de Z-index Hierárquico */
+  .z-base { z-index: 1; }
+  .z-elevated { z-index: 10; }
+  .z-sticky { z-index: 20; }
+  .z-fixed { z-index: 30; }
+  .z-overlay { z-index: 40; }
+  .z-modal { z-index: 50; }
+  .z-popover { z-index: 60; }
+  .z-tooltip { z-index: 70; }
+  .z-toast { z-index: 80; }
+  .z-top { z-index: 90; }
+  
+  /* Animações Premium */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  
+  /* Gradientes Premium */
+  .gradient-pharma {
+    background: linear-gradient(135deg, hsl(var(--pharma-navy)), hsl(var(--pharma-blue)));
+  }
+  
+  .gradient-pharma-light {
+    background: linear-gradient(135deg, hsl(var(--pharma-blue)), hsl(var(--pharma-light)));
+  }
+  
+  /* Typography Premium */
+  .text-gradient-pharma {
+    background: linear-gradient(135deg, hsl(var(--pharma-navy)), hsl(var(--pharma-blue)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
-/* Melhorias de performance para mobile */
+/* Otimizações de Performance */
 * {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
+/* Keyframes para Animações */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Otimização de fontes */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Fontes Otimizadas */
 .font-sans {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+}
+
+/* Scrollbar Customizada */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--pharma-blue));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--pharma-navy));
+}
+
+/* Hover Effects Premium */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsividade Avançada */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
