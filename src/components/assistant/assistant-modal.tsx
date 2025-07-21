@@ -56,17 +56,17 @@ export function AssistantModal({ open, onOpenChange }: AssistantModalProps) {
         </DialogDescription>
         
         <div className="relative flex flex-col h-screen w-full bg-background">
-          {/* Progress Header - Ajustado para evitar conflito */}
-          <div className="flex-shrink-0 bg-gradient-to-r from-pharma-navy/5 to-pharma-blue/5 border-b border-border/50 p-3 sm:p-4 pr-16">
+          {/* Progress Header Redesenhado */}
+          <div className="flex-shrink-0 bg-gradient-to-r from-pharma-navy/5 to-pharma-blue/5 border-b border-border/50 px-4 py-4 relative">
             <div className="container mx-auto max-w-4xl">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className="text-sm font-medium text-pharma-navy">
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center space-x-4 flex-1 min-w-0">
+                  <div className="text-sm font-semibold text-pharma-navy truncate">
                     Império Pharma • Assistente IA
                   </div>
                   <div className="hidden sm:flex items-center space-x-2 text-xs text-muted-foreground">
                     <span>Etapa {getStepNumber()}/3</span>
-                    <span>•</span>
+                    <span className="text-border">•</span>
                     <span className="capitalize text-pharma-blue font-medium">
                       {currentStep === "terms" ? "Termos" : 
                        currentStep === "profile" ? "Perfil" : "Consulta"}
@@ -74,18 +74,18 @@ export function AssistantModal({ open, onOpenChange }: AssistantModalProps) {
                   </div>
                 </div>
                 
-                {/* Badge GRATUITO reposicionado */}
-                <div className="flex items-center space-x-3 mr-8">
-                  <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                {/* Badge GRATUITO com espaçamento adequado */}
+                <div className="flex-shrink-0">
+                  <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg">
                     GRATUITO
                   </div>
                 </div>
               </div>
               
-              {/* Progress Bar */}
-              <div className="mt-3 w-full bg-border/30 rounded-full h-1.5 overflow-hidden">
+              {/* Progress Bar Melhorada */}
+              <div className="mt-4 w-full bg-border/30 rounded-full h-2 overflow-hidden">
                 <div 
-                  className="h-full bg-gradient-to-r from-pharma-blue to-pharma-navy transition-all duration-500 ease-out"
+                  className="h-full bg-gradient-to-r from-pharma-blue to-pharma-navy transition-all duration-500 ease-out rounded-full"
                   style={{ width: `${(getStepNumber() / 3) * 100}%` }}
                 />
               </div>

@@ -60,7 +60,7 @@ const config: Config = {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
-        // Cores do tema Império Pharma
+        // Cores do tema Império Pharma - Corrigidas
         "pharma-navy": "hsl(var(--pharma-navy))",
         "pharma-blue": "hsl(var(--pharma-blue))",
         "pharma-light": "hsl(var(--pharma-light))",
@@ -103,7 +103,7 @@ const config: Config = {
         'safe-right': 'env(safe-area-inset-right)',
       },
       minHeight: {
-        'touch': '44px', // Mínimo para touch targets
+        'touch': '44px',
       },
       fontSize: {
         'xs': ['0.75rem', { lineHeight: '1.5' }],
