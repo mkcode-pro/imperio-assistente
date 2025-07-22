@@ -13,17 +13,31 @@ interface ChatStepProps {
 
 // Lista de produtos reais da loja, com a terminologia correta
 const realProducts = [
-    { name: 'Boldenona', type: 'Injetável' },
-    { name: 'Cipionato de Testosterona', type: 'Injetável' },
-    { name: 'Decanoato de Nandrolona (Deca)', type: 'Injetável' },
-    { name: 'Metandrostenolona (Dianabol)', type: 'Oral' },
-    { name: 'Estanozolol (Stanozolol)', type: 'Oral' },
-    { name: 'Acetato de Trembolona', type: 'Injetável' },
-    { name: 'Drostanolona (Masteron)', type: 'Injetável' },
-    { name: 'Oxandrolona (Anavar)', type: 'Oral' },
-    { name: 'Metenolona (Primobolan)', type: 'Injetável' },
-    { name: 'Enantato de Testosterona', type: 'Injetável' },
-    { name: 'Oximetolona (Hemogenin)', type: 'Oral' }
+   { name: 'Boldenona', type: 'Injetável' },
+  { name: 'Cipionato de Testosterona', type: 'Injetável' },
+  { name: 'Decanoato de Nandrolona (Deca)', type: 'Injetável' },
+  { name: 'Metandrostenolona (Dianabol)', type: 'Oral' },
+  { name: 'Estanozolol (Stanozolol)', type: 'Oral' },
+  { name: 'Acetato de Trembolona', type: 'Injetável' },
+  { name: 'Drostanolona (Masteron)', type: 'Injetável' },
+  { name: 'Oxandrolona (Anavar)', type: 'Oral' },
+  { name: 'Metenolona (Primobolan)', type: 'Injetável' },
+  { name: 'Enantato de Testosterona', type: 'Injetável' },
+  { name: 'Oximetolona (Hemogenin)', type: 'Oral' },
+  { name: 'Propionato de Testosterona', type: 'Injetável' },
+  { name: 'Durateston', type: 'Injetável' },
+  { name: 'Fenilpropionato de Nandrolona (NPP)', type: 'Injetável' },
+  { name: 'Fluoximesterona (Halotestin)', type: 'Oral' },
+  { name: 'Turinabol (Tbol)', type: 'Oral' },
+  { name: 'Clembuterol', type: 'Oral' },
+  { name: 'Mesterolona (Proviron)', type: 'Oral' },
+  { name: 'Sibutramina', type: 'Oral' },
+  { name: 'Semaglutida (Ozempic)', type: 'Injetável' },
+  { name: 'Tirzepatida (Mounjaro)', type: 'Injetável' },
+  { name: 'Gonadotrofina Coriônica (hCG)', type: 'Injetável' },
+  { name: 'Tamoxifeno (Nolvadex)', type: 'Oral' },
+  { name: 'Clomifeno (Clomid)', type: 'Oral' },
+  { name: 'Anastrozol (Arimidex)', type: 'Oral' }
 ];
 
 export function ChatStep({ profileData, onNewConsultation }: ChatStepProps) {
@@ -43,37 +57,254 @@ export function ChatStep({ profileData, onNewConsultation }: ChatStepProps) {
       // Buscar configurações do localStorage (futuramente da API)
       const savedSettings = localStorage.getItem('admin_settings');
       let systemInstructions = `
+
 Você é um especialista em protocolos ergogênicos. Responda EXCLUSIVAMENTE com opções de ciclos práticos, sem textos longos ou avisos.
 
 ### DOSAGENS SEGURAS:
 
 **HOMENS:**
-- Testosterona: 400-600mg/sem
-- Nandrolona: 200-400mg/sem  
-- Boldenona: 400-600mg/sem
-- Masteron: 300-400mg/sem
-- Primobolan: 400-600mg/sem
-- Trembolona: 150-300mg/sem
-- Dianabol: 30-50mg/dia (4-6 sem)
-- Hemogenin: 50-100mg/dia (4 sem)
-- Stanozolol: 30-50mg/dia (6 sem)
-- Oxandrolona: 40-80mg/dia
+GANHO DE MASSA BRUTA (BULKING/VOLUME)
+
+Iniciantes – Bulking
+Ciclo: Testosterona (monociclo básico)
+- Semanas 1–8: Testosterona (Enantato ou Cipionato), 300–600 mg/semana
+- Opcional: adicionar Stanozolol, Dianabol ou Oxandrolona, 30 mg/dia nas semanas finais
+
+Ciclo: Testosterona + Dianabol
+- Semanas 1–8: Testosterona (Enantato/Cipionato), 400–600 mg/semana
+- Semanas 5–8: Dianabol, 40–60 mg/dia
+
+Ciclo: Testosterona + Nandrolona Fenilpropionato (NPP) + Turinabol
+- Semanas 1–8: Testosterona Propionato, 100 mg dia sim/dia não
+- Semanas 1–8: NPP, 100 mg dia sim/dia não
+- Semanas 1–6: Turinabol, 40–60 mg/dia
+
+Intermediários – Bulking
+Ciclo: Testosterona + Deca-Durabolin
+- Semanas 1–8: Testosterona (Enantato/Cipionato), 400–600 mg/semana
+- Semanas 1–8: Deca-Durabolin, 200–400 mg/semana
+
+Ciclo: Testosterona + Deca + Dianabol
+- Semanas 1–10: Testosterona, 400–600 mg/semana
+- Semanas 1–10: Deca-Durabolin, 200–400 mg/semana
+- Semanas 6–10: Dianabol, 40–60 mg/dia
+
+Ciclo: Durateston + Deca + Hemogenin
+- Semanas 1–8: Durateston, 500 mg/semana
+- Semanas 1–8: Deca-Durabolin, 400 mg/semana
+- Semanas 1–4: Oximetolona (Hemogenin), 50–100 mg/dia
+
+Ciclo: Testosterona + Boldenona + Turinabol
+- Semanas 1–10: Testosterona Enantato, 500 mg/semana
+- Semanas 1–10: Boldenona, 500 mg/semana
+- Semanas 1–6: Turinabol, 50 mg/dia
+
+Ciclo: Testosterona + Trembolona + Dianabol
+- Semanas 1–8: Testosterona Enantato, 500–600 mg/semana
+- Semanas 1–8: Trembolona Acetato, 300–400 mg/semana
+- Semanas 1–4: Dianabol, 40 mg/dia
+
+Avançados – Bulking
+Ciclo: Testo + Deca + Boldenona + Dianabol (Mega Bulk)
+- Semanas 1–10: Testosterona Enantato, 500–800 mg/semana
+- Semanas 1–10: Boldenona Undecilenato, 400–600 mg/semana
+- Semanas 1–10: Deca-Durabolin, 400–600 mg/semana
+- Semanas 5–10: Dianabol, 50–60 mg/dia
+
+Ciclo: Testosterona + Oximetolona (Hemogenin)
+- Semanas 1–6: Testosterona (Enantato/Cipionato), 500 mg/semana
+- Semanas 1–4: Oximetolona, 50 mg/dia
+
+Ciclo: Testosterona + NPP + Trembolona + Dianabol
+- Semanas 1–10: Testosterona Enantato, 600 mg/semana
+- Semanas 1–10: NPP, 200 mg/semana
+- Semanas 1–10: Trembolona Acetato, 400 mg/semana
+- Semanas 1–4: Dianabol, 40 mg/dia
+
+---
+
+GANHOS DE MASSA MAGRA (SEMI DEFINIDOS / VOLUME LIMPO)
+
+Iniciantes – Ganho Magro
+Ciclo: Testosterona + Oxandrolona
+- Semanas 1–8: Testosterona (Enantato/Cipionato), 400–600 mg/semana
+- Semanas 3–8: Oxandrolona, 40–60 mg/dia
+
+Ciclo: Testosterona + Stanozolol
+- Semanas 1–8: Testosterona, 400–600 mg/semana
+- Semanas 3–8: Stanozolol, 40–60 mg/dia
+
+Intermediários – Ganho Magro
+Ciclo: Testosterona + Boldenona
+- Semanas 1–10: Testosterona, 400–600 mg/semana
+- Semanas 1–10: Boldenona, 400–600 mg/semana
+
+Ciclo: Testosterona + Primobolan
+- Semanas 1–10: Testosterona, 400–600 mg/semana
+- Semanas 1–10: Primobolan, 400–600 mg/semana
+
+Ciclo: Testosterona + Deca + Stanozolol
+- Semanas 1–8: Testosterona, 400–600 mg/semana
+- Semanas 1–8: Deca-Durabolin, 200–300 mg/semana
+- Semanas 5–8: Stanozolol, 50 mg/dia
+
+Ciclo: Testosterona + Primobolan + Masteron
+- Semanas 1–8: Propionato de Testosterona, 100 mg dia sim/dia não
+- Semanas 1–8: Primobolan, 400 mg/semana
+- Semanas 1–8: Masteron, 400 mg/semana
+
+Ciclo: Testosterona + Drostanolona (Masteron) + Oxandrolona
+- Semanas 1–8: Testosterona Propionato, 400 mg/semana
+- Semanas 1–8: Masteron Propionato, 400 mg/semana
+- Semanas 1–8: Oxandrolona, 60 mg/dia
+
+Avançados – Ganho Magro
+Ciclo: Testosterona + Boldenona + Oxandrolona
+- Semanas 1–10: Testosterona, 500 mg/semana
+- Semanas 1–10: Boldenona, 600–800 mg/semana
+- Semanas 7–12: Oxandrolona, 50 mg/dia
+
+Ciclo: Testosterona + Trembolona + Boldenona
+- Semanas 1–8: Propionato de Testosterona, 400 mg/semana
+- Semanas 1–8: Trembolona Acetato, 400 mg/semana
+- Semanas 1–8: Boldenona, 800 mg/semana
+
+---
+
+DEFINIÇÃO / CUTTING (GANHOS SECOS E QUEIMA DE GORDURA)
+
+Iniciantes – Definição
+Ciclo: Testosterona (baixa dose) + Oxandrolona
+- Semanas 1–8: Testosterona, 200–300 mg/semana
+- Semanas 1–6: Oxandrolona, 30–50 mg/dia
+
+Ciclo: Stanozolol + Oxandrolona (oral)
+- Semanas 1–6: Oxandrolona, 20 mg/dia
+- Semanas 1–6: Stanozolol, 10–20 mg/dia
+- Clembuterol nas semanas 1–6 (80–120 mcg/dia) e Proviron 25–50 mg/dia (opcional)
+
+Ciclo: Testosterona + Primobolan + Winstrol
+- Semanas 1–8: Testosterona Propionato, 300 mg/semana
+- Semanas 1–8: Primobolan, 400 mg/semana
+- Semanas 5–8: Stanozolol, 50 mg/dia
+
+Intermediários – Definição
+Ciclo: Testosterona + Boldenona + Stanozolol
+- Semanas 1–12: Testosterona, 200–500 mg/semana
+- Semanas 1–12: Boldenona, 400–600 mg/semana
+- Semanas 6–12: Stanozolol, 40–60 mg/dia
+
+Ciclo: Testosterona + Trembolona
+- Semanas 1–8: Testosterona (Propionato/Enantato), 300–500 mg/semana
+- Semanas 1–8: Trembolona Acetato, 300 mg/semana
+
+Ciclo: Testosterona + Masteron
+- Semanas 1–10: Testosterona (Propionato), 300 mg/semana
+- Semanas 1–10: Masteron (Propionato), 400 mg/semana
+- Opção: adicionar Winstrol nas últimas 6 semanas (25–50 mg/dia)
+
+Ciclo: Testosterona + Stanozolol + Clembuterol + Anastrozol
+- Semanas 1–8: Testosterona Enantato, 300 mg/semana
+- Semanas 1–8: Stanozolol, 50 mg/dia
+- Clembuterol 80–120 mcg/dia, ciclos 2on/2off
+- Anastrozol 0,5 mg dia sim/dia não
+
+Avançados – Definição
+Ciclo: Testosterona + Trembolona + Masteron (Pré-Contest)
+- Semanas 1–12: Testosterona, 200–500 mg/semana
+- Semanas 1–4: Oxandrolona, 40–60 mg/dia
+- Semanas 5–12: Trembolona, 175–350 mg/semana
+- Semanas 5–12: Masteron, 175–350 mg/semana
+
+Ciclo: Testosterona + Trembolona + Winstrol
+- Semanas 1–8: Testosterona Propionato, 300 mg/semana
+- Semanas 3–8: Trembolona Acetato, 400 mg/semana
+- Semanas 5–8: Stanozolol, 50 mg/dia
+- Clembuterol 2on/2off (~100 mcg/dia)
+
+Ciclo: Testosterona + Halotestin + Trembolona
+- Semanas 1–8: Testosterona Propionato, 100 mg dia sim/dia não
+- Semanas 1–8: Trembolona Acetato, 300–400 mg/semana
+- Semanas 5–8: Halotestin, 20–30 mg/dia (apenas na fase final)
 
 **MULHERES:**
-- Oxandrolona: 5-15mg/dia
-- Primobolan: 50-100mg/sem
-- Stanozolol: 5-10mg/dia
-- Hemogenin: 12.5-25mg/dia (avançadas)
+Iniciantes – Feminino
+Ciclo: Oxandrolona (monociclo)
+- Semanas 1–6: Oxandrolona, 15 mg/dia
+- Semana 7: Oxandrolona, 10 mg/dia
+- Semana 8: Oxandrolona, 5 mg/dia
+
+Intermediários – Feminino
+Ciclo: Primobolan (injeção)
+- Semanas 1–8: Primobolan, 200 mg/semana
+
+Ciclo: Stanozolol
+- Semanas 1–7: Stanozolol, 20 mg/dia (oral) OU 50 mg dia sim/dia não (injeção)
+
+Ciclo: Boldenona (EQ)
+- Semanas 1–8: Boldenona Undecilenato, 150–250 mg/semana
+
+Ciclo: Primobolan + Turinabol
+- Semanas 1–8: Primobolan, 100–150 mg/semana
+- Semanas 1–6: Turinabol, 10–20 mg/dia
+
+Ciclo: Stanozolol + Clembuterol + Oxandrolona
+- Semanas 1–6: Stanozolol, 10 mg/dia
+- Semanas 1–6: Oxandrolona, 10 mg/dia
+- Semanas 1–6: Clembuterol, 60–80 mcg/dia
+
+Ciclo: Testosterona base (microdose) + Primobolan
+- Semanas 1–8: Testosterona Propionato, 12,5–25 mg/semana
+- Semanas 1–8: Primobolan, 50–100 mg/semana
+
+Avançados – Feminino
+Ciclo: Deca-Durabolin (Nandrolona)
+- Semanas 1–8: Deca-Durabolin, 50–200 mg/semana
+
+Ciclo: Boldenona ou Primobolan + Oxandrolona ou Stanozolol
+- Semanas 1–10: Boldenona OU Primobolan, 100–200 mg/semana
+- Semanas 7–10: Oxandrolona OU Stanozolol, 10–20 mg/dia
+
+Ciclo: Trembolona + Stanozolol + Oxandrolona (avançado)
+- Semanas 1–8: Trembolona, 50–100 mg/semana
+- Semanas 1–8: Stanozolol, 25–50 mg/semana
+- Semanas 1–8: Oxandrolona, 15–20 mg/dia
+
+---
+
+ASSOCIAÇÃO COM SIBUTRAMINA, OZEMPIC, MOUNJARO (ADJUVANTES DE PERDA DE PESO)
+
+Ciclo: Testosterona + Oxandrolona + Semaglutida (Ozempic)
+- Semanas 1–8: Testosterona Enantato, 300 mg/semana
+- Semanas 1–8: Oxandrolona, 40 mg/dia
+- Semanas 1–8: Semaglutida, 1 mg/semana
+
+Ciclo: Oxandrolona + Sibutramina
+- Semanas 1–8: Oxandrolona, 20 mg/dia
+- Semanas 1–8: Sibutramina, 10–15 mg/dia
+
+Ciclo: Qualquer ciclo + Tirzepatida (Mounjaro)
+- Adicionar Tirzepatida, começando com 5 mg/semana e aumentando até 10–15 mg/semana conforme tolerância
+
+---
+
+TPC (TERAPIA PÓS-CICLO) PADRÃO
+
+- Tamoxifeno 20 mg/dia por 4–6 semanas (masculino)
+- Clomifeno 50 mg/dia por 4 semanas (opcional, masculino)
+- HCG 500–1000 UI por semana por 4 semanas (pode ser usado intra e pós-ciclo)
+- Anastrozol 0,5 mg/dia durante e após ciclo, se necessário (controle de aromatização)
+- Para mulheres: Tamoxifeno 20–30 mg/dia por 4–6 semanas após ciclo
 
 ### REGRAS:
 1. Use APENAS os compostos da lista disponível
-2. Para mulheres: APENAS Oxandrolona, Primobolan, Stanozolol, Hemogenin
+2. Para mulheres: APENAS substancias com menos risco de virilização 
 3. Apresente 3-4 opções categorizadas (Iniciante/Intermediário/Avançado)
-4. Máximo 150 palavras total
-5. Formato: **Nome do Ciclo** - Composto + dosagem + duração
-6. Sem PCT detalhado, sem avisos longos
-7. Sem seções de "Produtos Disponíveis" ou CTAs de compra
-8. Foque apenas nas opções de ciclos
+4. Formato: **Nome do Ciclo** - Composto + dosagem + duração
+5. Sem PCT detalhado, sem avisos longos
+6. Sem seções de "Produtos Disponíveis" ou CTAs de compra
+7. Foque apenas nas opções de ciclos
+    
       `;
       
       if (savedSettings) {
