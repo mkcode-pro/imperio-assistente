@@ -1,152 +1,200 @@
 
-# 🚀 GUIA DE DEPLOY - IMPÉRIO PHARMA
+# 🚀 GUIA DE DEPLOY - ASSISTENTE IA ERGOGÊNICOS
 
 ## 📋 Visão Geral
 
-Este guia cobre todos os cenários de deploy do Império Pharma, com foco especial em **VPS**, **múltiplos sites** e **detecção dinâmica de portas**.
+Este guia cobre todos os cenários de deploy do **Assistente IA Especializado em Protocolos Ergogênicos**, com foco em **VPS** e **configuração otimizada para IA**.
 
 ## 🔧 Pré-requisitos para Deploy
 
 ### Variáveis de Ambiente Obrigatórias
 ```bash
 # .env.production
-VITE_GEMINI_API_KEY=sua_chave_real_aqui
-VITE_WHATSAPP_NUMBER=5511999999999
-VITE_PIX_KEY=chave@pix.real.com
-
-# Opcionais para VPS
-PORT=3000                    # Porta específica (auto-detect se omitido)
-PREVIEW_PORT=4173           # Porta para preview
+VITE_GEMINI_API_KEY=sua_chave_real_do_gemini_aqui
+VITE_ADMIN_PASSWORD=senha_forte_para_admin
 NODE_ENV=production
+
+# Configurações Opcionais
+VITE_APP_TITLE=Assistente Ergogênicos IA
 ```
 
 ### Checklist Pré-Deploy
 - [ ] Build local funciona (`npm run build`)
-- [ ] Todas as variáveis de ambiente configuradas
-- [ ] Imagens de produtos adicionadas
-- [ ] Dados reais dos produtos
-- [ ] Testes em dispositivos móveis
+- [ ] Chave do Google Gemini configurada e testada
+- [ ] Senha do admin alterada (não usar `admin123`)
+- [ ] Prompts da IA revisados e otimizados
+- [ ] Testes realizados em diferentes perfis de usuário
 
-## 🌐 Deploy em VPS (Configuração Avançada)
+## 🌐 Deploy em VPS (Especializado para IA)
 
 ### 1. Preparação do Servidor
 
 #### Verificar Portas Disponíveis
 ```bash
-# Listar portas em uso
-sudo netstat -tulpn | grep LISTEN
-# ou
-sudo ss -tulpn | grep LISTEN
+# Encontrar porta livre no range 3000-9000
+find_free_port() {
+    for port in $(seq 3000 9000); do
+        if ! ss -tuln | grep -q ":$port "; then
+            echo $port
+            return 0
+        fi
+    done
+    echo "Nenhuma porta livre encontrada!" >&2
+    return 1
+}
 
-# Verificar porta específica
-sudo lsof -i :3000
-
-# Verificar range de portas
-sudo nmap -p 3000-3010 localhost
+PORT=$(find_free_port)
+echo "🚀 Porta livre: $PORT"
 ```
 
-#### Instalar Dependências do Sistema
+#### Instalar Dependências Específicas
 ```bash
 # Ubuntu/Debian
 sudo apt update
-sudo apt install -y nodejs npm nginx pm2 certbot
+sudo apt install -y nodejs npm nginx pm2 certbot curl
 
-# CentOS/RHEL
-sudo yum install -y nodejs npm nginx
-sudo npm install -g pm2
+# Verificar Node.js (mínimo 18+)
+node --version
+
+# Configurar firewall para IA
+sudo ufw allow ssh
+sudo ufw allow 80
+sudo ufw allow 443
+sudo ufw allow 8080  # Porta padrão da aplicação
+sudo ufw enable
 ```
 
-### 2. Deploy com PM2 (Recomendado para VPS)
+### 2. Script de Deploy Inteligente
 
-#### Setup Inicial
+#### Criar Script Automático
 ```bash
-# 1. Clone o projeto
-git clone <seu-repositorio>
-cd imperio-pharma
+# smart-deploy.sh
+#!/bin/bash
+set -e
 
-# 2. Instalar dependências
-npm ci --only=production
+echo "🤖 Deploy do Assistente IA Ergogênicos"
 
-# 3. Configurar variáveis de ambiente
-nano .env.production
-# Adicione suas variáveis aqui
+# Função para encontrar porta livre
+find_free_port() {
+    for port in $(seq 3000 9000); do
+        if ! lsof -Pi :$port -sTCP:LISTEN -t >/dev/null 2>&1 && \
+           ! ss -tuln | grep -q ":$port " && \
+           ! netstat -tuln 2>/dev/null | grep -q ":$port "; then
+            echo $port
+            return 0
+        fi
+    done
+    echo "❌ Nenhuma porta livre no range 3000-9000"
+    exit 1
+}
 
-# 4. Build de produção
+# Detectar porta livre
+FREE_PORT=$(find_free_port)
+echo "✅ Porta livre encontrada: $FREE_PORT"
+
+# Verificar variáveis obrigatórias
+if [ -z "$VITE_GEMINI_API_KEY" ]; then
+    echo "❌ VITE_GEMINI_API_KEY não configurada!"
+    echo "Configure: export VITE_GEMINI_API_KEY=sua_chave_aqui"
+    exit 1
+fi
+
+# Build com porta específica
+echo "📦 Gerando build de produção..."
 npm run build
-```
 
-#### Configuração PM2
-```bash
-# Criar ecosystem file
-cat > ecosystem.config.js << EOF
-module.exports = {
-  apps: [{
-    name: 'imperio-pharma',
-    script: 'npx',
-    args: 'serve -s dist -l 3000',
-    cwd: '/caminho/para/imperio-pharma',
-    env: {
-      NODE_ENV: 'production',
-      PORT: 3000
-    },
-    env_production: {
-      NODE_ENV: 'production',
-      PORT: 3000
-    },
-    instances: 1,
-    autorestart: true,
-    watch: false,
-    max_memory_restart: '1G'
-  }]
-};
-EOF
+# Parar processo anterior
+pm2 delete assistente-ia 2>/dev/null || true
 
-# Iniciar aplicação
-pm2 start ecosystem.config.js --env production
+# Iniciar com nova porta
+echo "🌟 Iniciando assistente IA na porta $FREE_PORT..."
+PORT=$FREE_PORT pm2 start "npm run preview -- --port $FREE_PORT --host 0.0.0.0" \
+    --name assistente-ia \
+    --env production
 
-# Configurar auto-start
+# Configurar PM2 para reiniciar
 pm2 startup
 pm2 save
+
+# Atualizar Nginx
+if [ -f "/etc/nginx/sites-available/assistente-ia" ]; then
+    echo "🔧 Atualizando configuração do Nginx..."
+    sudo sed -i "s/localhost:[0-9]*/localhost:$FREE_PORT/g" \
+        /etc/nginx/sites-available/assistente-ia
+    sudo nginx -t && sudo systemctl reload nginx
+    echo "✅ Nginx atualizado para porta $FREE_PORT"
+fi
+
+echo "🎉 Deploy concluído!"
+echo "🌐 Aplicação: http://seu-dominio.com"
+echo "⚙️  Admin: http://seu-dominio.com/admin"
+echo "📊 Monitor: pm2 monit"
 ```
 
-#### PM2 com Múltiplos Sites
+#### Uso do Script
 ```bash
-# Para múltiplos projetos na mesma VPS
-cat > ecosystem.config.js << EOF
-module.exports = {
-  apps: [
-    {
-      name: 'imperio-pharma',
-      script: 'npx',
-      args: 'serve -s dist -l 3000',
-      cwd: '/var/www/imperio-pharma'
-    },
-    {
-      name: 'outro-site',
-      script: 'npx', 
-      args: 'serve -s dist -l 3001',
-      cwd: '/var/www/outro-site'
-    }
-  ]
-};
-EOF
+# Tornar executável
+chmod +x smart-deploy.sh
+
+# Configurar variáveis
+export VITE_GEMINI_API_KEY=sua_chave_real_aqui
+export VITE_ADMIN_PASSWORD=senha_forte_aqui
+
+# Executar deploy
+./smart-deploy.sh
 ```
 
-### 3. Configuração Nginx (Reverse Proxy)
+### 3. Configuração PM2 Otimizada para IA
 
-#### Configuração Básica
+#### Ecosystem Configuration
+```javascript
+// ecosystem.config.js
+module.exports = {
+  apps: [{
+    name: 'assistente-ia',
+    script: 'npm',
+    args: 'run preview -- --port 8080 --host 0.0.0.0',
+    cwd: '/var/www/assistente-ia',
+    env: {
+      NODE_ENV: 'production',
+      PORT: 8080,
+      VITE_GEMINI_API_KEY: process.env.VITE_GEMINI_API_KEY,
+      VITE_ADMIN_PASSWORD: process.env.VITE_ADMIN_PASSWORD
+    },
+    instances: 1, // IA funciona melhor com uma instância
+    autorestart: true,
+    watch: false,
+    max_memory_restart: '512M', // Controle de memória para IA
+    error_file: '/var/log/pm2/assistente-ia-error.log',
+    out_file: '/var/log/pm2/assistente-ia-out.log',
+    log_file: '/var/log/pm2/assistente-ia-combined.log',
+    time: true
+  }]
+};
+```
+
+### 4. Configuração Nginx para Assistente IA
+
+#### Configuração Otimizada
 ```nginx
-# /etc/nginx/sites-available/imperio-pharma
+# /etc/nginx/sites-available/assistente-ia
 server {
     listen 80;
-    server_name imperio-pharma.com.br www.imperio-pharma.com.br;
+    server_name seu-assistente-ia.com www.seu-assistente-ia.com;
     
-    # Gzip compression
-    gzip on;
-    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+    # Security headers específicos para IA
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     
+    # Rate limiting para proteger a IA
+    limit_req_zone $binary_remote_addr zone=ai_limit:10m rate=10r/m;
+    limit_req zone=ai_limit burst=5 nodelay;
+    
+    # Proxy para aplicação
     location / {
-        proxy_pass http://localhost:3000;
+        proxy_pass http://localhost:8080;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -156,48 +204,57 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_cache_bypass $http_upgrade;
         
-        # Timeout settings
+        # Timeout otimizado para IA (respostas podem demorar)
         proxy_connect_timeout 60s;
         proxy_send_timeout 60s;
         proxy_read_timeout 60s;
     }
     
-    # Static files caching
+    # Proteção extra para painel admin
+    location /admin {
+        # Rate limiting mais restritivo para admin
+        limit_req_zone $binary_remote_addr zone=admin_limit:10m rate=5r/m;
+        limit_req zone=admin_limit burst=2 nodelay;
+        
+        # Opcional: Restringir por IP
+        # allow 192.168.1.0/24;
+        # allow SEU.IP.PUBLICO.AQUI;
+        # deny all;
+        
+        proxy_pass http://localhost:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+    
+    # Cache para assets estáticos
     location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2)$ {
-        proxy_pass http://localhost:3000;
+        proxy_pass http://localhost:8080;
         expires 1y;
         add_header Cache-Control "public, immutable";
+        add_header Vary Accept-Encoding;
     }
-}
-```
-
-#### Múltiplos Sites na Mesma VPS
-```nginx
-# Site 1: imperio-pharma.com.br
-server {
-    listen 80;
-    server_name imperio-pharma.com.br;
-    location / {
-        proxy_pass http://localhost:3000;
-        # ... outras configurações
-    }
-}
-
-# Site 2: outro-site.com.br  
-server {
-    listen 80;
-    server_name outro-site.com.br;
-    location / {
-        proxy_pass http://localhost:3001;
-        # ... outras configurações  
-    }
+    
+    # Gzip compression
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_types
+        text/plain
+        text/css
+        text/xml
+        text/javascript
+        application/javascript
+        application/xml+rss
+        application/json;
 }
 ```
 
 #### Ativar Configuração
 ```bash
 # Criar symlink
-sudo ln -s /etc/nginx/sites-available/imperio-pharma /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/assistente-ia /etc/nginx/sites-enabled/
 
 # Testar configuração
 sudo nginx -t
@@ -206,324 +263,204 @@ sudo nginx -t
 sudo systemctl reload nginx
 ```
 
-### 4. SSL/HTTPS com Let's Encrypt
+### 5. SSL/HTTPS com Let's Encrypt
 
 ```bash
-# Instalar certbot (se não instalado)
-sudo apt install certbot python3-certbot-nginx
+# Obter certificado SSL
+sudo certbot --nginx -d seu-assistente-ia.com -d www.seu-assistente-ia.com
 
-# Obter certificado
-sudo certbot --nginx -d imperio-pharma.com.br -d www.imperio-pharma.com.br
+# Verificar renovação automática
+sudo certbot renew --dry-run
 
-# Renovação automática
+# Configurar renovação no cron
 sudo crontab -e
 # Adicionar linha:
-0 12 * * * /usr/bin/certbot renew --quiet
+0 3 * * * certbot renew --quiet && systemctl reload nginx
 ```
 
-## 🔄 Deploy com Auto-detecção de Portas
+## 🔧 Monitoramento Específico para IA
 
-### Script de Deploy Inteligente
+### Script de Monitoramento
 ```bash
 #!/bin/bash
-# deploy.sh
+# monitor-ai.sh
 
-set -e
+LOG_FILE="/var/log/assistente-ia-monitor.log"
 
-echo "🚀 Iniciando deploy do Império Pharma..."
-
-# Função para encontrar porta livre
-find_free_port() {
-    local port=3000
-    while lsof -Pi :$port -sTCP:LISTEN -t >/dev/null 2>&1; do
-        echo "⚠️  Porta $port em uso, tentando próxima..."
-        port=$((port + 1))
-    done
-    echo $port
-}
-
-# Detectar porta livre
-FREE_PORT=$(find_free_port)
-echo "✅ Porta livre encontrada: $FREE_PORT"
-
-# Configurar variável de ambiente
-export PORT=$FREE_PORT
-
-# Build
-echo "📦 Gerando build de produção..."
-npm run build
-
-# Parar PM2 se existir
-pm2 delete imperio-pharma 2>/dev/null || true
-
-# Iniciar com nova porta
-echo "🌟 Iniciando aplicação na porta $FREE_PORT..."
-pm2 start "npx serve -s dist -l $FREE_PORT" --name imperio-pharma
-
-# Atualizar nginx se necessário
-if [ -f "/etc/nginx/sites-available/imperio-pharma" ]; then
-    echo "🔧 Atualizando configuração do Nginx..."
-    sudo sed -i "s/localhost:[0-9]*/localhost:$FREE_PORT/g" /etc/nginx/sites-available/imperio-pharma
-    sudo nginx -t && sudo systemctl reload nginx
-fi
-
-echo "✅ Deploy concluído! Aplicação rodando na porta $FREE_PORT"
-```
-
-### Uso do Script
-```bash
-# Tornar executável
-chmod +x deploy.sh
-
-# Executar deploy
-./deploy.sh
-```
-
-## 🐳 Deploy com Docker
-
-### Dockerfile Multi-stage
-```dockerfile
-# Build stage
-FROM node:20-alpine AS builder
-
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-
-COPY . .
-RUN npm run build
-
-# Production stage
-FROM nginx:alpine
-
-# Copy built app
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-# Custom nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost/ || exit 1
-
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
-```
-
-### Docker Compose para VPS
-```yaml
-# docker-compose.yml
-version: '3.8'
-
-services:
-  imperio-pharma:
-    build: .
-    ports:
-      - "${PORT:-3000}:80"
-    environment:
-      - NODE_ENV=production
-    restart: unless-stopped
-    
-  nginx-proxy:
-    image: nginx:alpine
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - /etc/letsencrypt:/etc/letsencrypt
-    depends_on:
-      - imperio-pharma
-    restart: unless-stopped
-```
-
-### Comandos Docker
-```bash
-# Build e deploy
-docker-compose up -d --build
-
-# Ver logs
-docker-compose logs -f
-
-# Atualizar
-docker-compose pull && docker-compose up -d
-```
-
-## ☁️ Deploy em Plataformas Cloud
-
-### 1. Vercel (Mais Simples)
-```bash
-# Instalar CLI
-npm i -g vercel
-
-# Deploy
-vercel --prod
-
-# Configurar domínio customizado
-vercel domains add imperio-pharma.com.br
-```
-
-### 2. Netlify
-```bash
-# Build e deploy manual
-npm run build
-netlify deploy --prod --dir=dist
-
-# Deploy contínuo via Git
-# Configurar no painel: https://app.netlify.com
-```
-
-### 3. AWS S3 + CloudFront
-```bash
-# Instalar AWS CLI
-aws configure
-
-# Build e sync
-npm run build
-aws s3 sync dist/ s3://imperio-pharma-bucket --delete
-
-# Invalidar cache do CloudFront
-aws cloudfront create-invalidation --distribution-id EDFDVBD6EXAMPLE --paths "/*"
-```
-
-## 🔧 Monitoramento e Manutenção
-
-### Scripts de Monitoramento
-```bash
-#!/bin/bash
-# monitor.sh
-
-# Verificar se aplicação está respondendo
-check_health() {
-    local port=$1
-    if curl -f http://localhost:$port >/dev/null 2>&1; then
-        echo "✅ Aplicação na porta $port está saudável"
+# Verificar se aplicação responde
+check_ai_health() {
+    local response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/)
+    if [ "$response" = "200" ]; then
+        echo "[$(date)] ✅ Assistente IA operacional"
         return 0
     else
-        echo "❌ Aplicação na porta $port não responde"
+        echo "[$(date)] ❌ Assistente IA não responde (HTTP: $response)"
         return 1
     fi
 }
 
-# Verificar PM2
-if ! pm2 list | grep -q "imperio-pharma"; then
-    echo "⚠️  PM2 não encontrado, reiniciando..."
-    pm2 start ecosystem.config.js
-fi
+# Verificar API do Gemini
+check_gemini_api() {
+    # Simular chamada simples para verificar quota
+    local test_response=$(curl -s -H "Content-Type: application/json" \
+        -H "Authorization: Bearer $VITE_GEMINI_API_KEY" \
+        "https://generativelanguage.googleapis.com/v1/models" | grep -c "models")
+    
+    if [ "$test_response" -gt 0 ]; then
+        echo "[$(date)] ✅ API Gemini acessível"
+        return 0
+    else
+        echo "[$(date)] ⚠️  API Gemini com problemas"
+        return 1
+    fi
+}
 
-# Health check
-if ! check_health 3000; then
-    echo "🔄 Reiniciando aplicação..."
-    pm2 restart imperio-pharma
-fi
+# Verificar uso de memória (IA pode consumir mais)
+check_memory() {
+    local memory_usage=$(free | grep Mem | awk '{printf("%.1f", $3/$2 * 100.0)}')
+    echo "[$(date)] 📊 Uso de memória: ${memory_usage}%"
+    
+    if (( $(echo "$memory_usage > 90" | bc -l) )); then
+        echo "[$(date)] ⚠️  Uso de memória alto: ${memory_usage}%"
+        # Reiniciar se necessário
+        pm2 restart assistente-ia
+    fi
+}
+
+# Executar verificações
+{
+    echo "[$(date)] 🔍 Iniciando verificação do Assistente IA"
+    
+    if ! check_ai_health; then
+        echo "[$(date)] 🔄 Reiniciando assistente..."
+        pm2 restart assistente-ia
+        sleep 10
+        check_ai_health
+    fi
+    
+    check_gemini_api
+    check_memory
+    
+    echo "[$(date)] ✅ Verificação concluída"
+    echo "---"
+} >> $LOG_FILE
 ```
 
-### Cron Jobs para Manutenção
+### Cron Jobs
 ```bash
 # Adicionar ao crontab
 crontab -e
 
 # Verificar aplicação a cada 5 minutos
-*/5 * * * * /home/user/scripts/monitor.sh
+*/5 * * * * /home/user/scripts/monitor-ai.sh
 
-# Backup de logs diário
-0 2 * * * pm2 flush && tar -czf /backup/logs-$(date +\%Y\%m\%d).tar.gz /home/user/.pm2/logs/
+# Backup de conversas diário
+0 2 * * * cd /var/www/assistente-ia && npm run backup-conversations
 
-# Renovar SSL (Let's Encrypt)
-0 3 * * * certbot renew --quiet && systemctl reload nginx
+# Limpeza de logs semanalmente
+0 1 * * 0 find /var/log/pm2/ -name "*.log" -mtime +7 -delete
+
+# Reiniciar PM2 semanalmente (preventivo)
+0 3 * * 0 pm2 restart assistente-ia
 ```
 
-### Logs e Debug
+## 📊 Backup e Manutenção
+
+### Script de Backup
 ```bash
-# Logs PM2
-pm2 logs imperio-pharma
+#!/bin/bash
+# backup-ai.sh
 
-# Logs Nginx
-sudo tail -f /var/log/nginx/access.log
-sudo tail -f /var/log/nginx/error.log
+BACKUP_DIR="/backup/assistente-ia"
+DATE=$(date +%Y%m%d_%H%M%S)
 
-# Monitoramento em tempo real
-pm2 monit
+# Criar diretório de backup
+mkdir -p $BACKUP_DIR
+
+# Backup de conversas (localStorage simulation)
+echo "💾 Backup das conversas..."
+pm2 logs assistente-ia --lines 1000 > $BACKUP_DIR/conversations_$DATE.log
+
+# Backup de configurações
+echo "⚙️  Backup das configurações..."
+cp /var/www/assistente-ia/.env* $BACKUP_DIR/ 2>/dev/null || true
+
+# Backup do código
+echo "📦 Backup do código..."
+tar -czf $BACKUP_DIR/code_$DATE.tar.gz /var/www/assistente-ia
+
+# Limpar backups antigos (manter apenas 30 dias)
+find $BACKUP_DIR -name "*.tar.gz" -mtime +30 -delete
+find $BACKUP_DIR -name "*.log" -mtime +30 -delete
+
+echo "✅ Backup concluído: $BACKUP_DIR"
 ```
 
-## 🔒 Segurança
+## 🔒 Segurança Específica para IA
 
 ### Configurações de Segurança
-```nginx
-# Adicionar ao nginx
-add_header X-Frame-Options "SAMEORIGIN";
-add_header X-Content-Type-Options "nosniff";
-add_header X-XSS-Protection "1; mode=block";
-add_header Referrer-Policy "strict-origin-when-cross-origin";
-add_header Content-Security-Policy "default-src 'self'";
-```
-
-### Firewall (UFW)
 ```bash
-# Configurar firewall básico
-sudo ufw enable
-sudo ufw allow ssh
+# Firewall restritivo
+sudo ufw deny 22
+sudo ufw allow from SEU.IP.CASA to any port 22
 sudo ufw allow 80
 sudo ufw allow 443
-sudo ufw allow 3000  # Apenas se necessário acesso direto
+sudo ufw limit ssh
+
+# Fail2ban para proteção adicional
+sudo apt install fail2ban
+sudo systemctl enable fail2ban
 ```
 
-## 📊 Performance e Otimização
-
-### Configurações Nginx para Performance
-```nginx
-# Cache de arquivos estáticos
-location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg)$ {
-    expires 1y;
-    add_header Cache-Control "public, immutable";
-    add_header Vary Accept-Encoding;
-}
-
-# Compressão Gzip
-gzip on;
-gzip_vary on;
-gzip_min_length 1024;
-gzip_types
-    text/plain
-    text/css
-    text/xml
-    text/javascript
-    application/javascript
-    application/xml+rss
-    application/json;
+### Arquivo fail2ban para IA
+```ini
+# /etc/fail2ban/jail.local
+[nginx-ai-limit]
+enabled = true
+filter = nginx-limit-req
+logpath = /var/log/nginx/error.log
+maxretry = 5
+findtime = 600
+bantime = 3600
+action = iptables-multiport[name=ReqLimit, port="http,https", protocol=tcp]
 ```
 
 ---
 
-## 📞 Troubleshooting
+## 📞 Troubleshooting Específico
 
 ### Problemas Comuns
 
-**Porta em uso**:
+**IA não responde ou responde erro**:
 ```bash
-# Matar processo na porta
-sudo fuser -k 3000/tcp
-# ou
-sudo kill $(sudo lsof -t -i:3000)
+# Verificar chave do Gemini
+curl -H "Authorization: Bearer $VITE_GEMINI_API_KEY" \
+  https://generativelanguage.googleapis.com/v1/models
+
+# Verificar logs
+pm2 logs assistente-ia --lines 50
 ```
 
-**PM2 não inicia**:
+**Quota da API excedida**:
 ```bash
-# Resetar PM2
-pm2 kill
-pm2 startup
+# Verificar uso no Google Cloud Console
+# Implementar cache de respostas similares
+# Aumentar limites ou aguardar reset
 ```
 
-**SSL não funciona**:
+**Alta latência nas respostas**:
 ```bash
-# Verificar certificado
-sudo certbot certificates
-# Renovar forçado
-sudo certbot renew --force-renewal
+# Verificar conectividade
+ping generativelanguage.googleapis.com
+
+# Verificar uso de CPU/memória
+htop
+
+# Otimizar prompts (reduzir tokens)
 ```
 
 ---
 
-**🚀 Com este guia, você pode fazer deploy em qualquer ambiente, desde VPS simples até infraestrutura cloud complexa!**
+**🤖 Deploy completo do Assistente IA para VPS com configuração otimizada!**
 
-*Para problemas específicos, consulte os logs e documentação das ferramentas utilizadas.*
+*Para problemas específicos da API do Gemini, consulte a documentação oficial do Google AI.*

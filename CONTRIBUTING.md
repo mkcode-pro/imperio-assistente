@@ -1,12 +1,12 @@
 
-# 🤝 GUIA DE CONTRIBUIÇÃO - IMPÉRIO PHARMA
+# 🤝 GUIA DE CONTRIBUIÇÃO - ASSISTENTE IA ERGOGÊNICOS
 
 ## 📋 Índice
 1. [Configuração do Ambiente](#configuração-do-ambiente)
-2. [Estrutura de Desenvolvimento](#estrutura-de-desenvolvimento)
-3. [Como Modificar Componentes](#como-modificar-componentes)
-4. [Gerenciamento de Estado](#gerenciamento-de-estado)
-5. [Sistema de Design](#sistema-de-design)
+2. [Arquitetura do Assistente IA](#arquitetura-do-assistente-ia)
+3. [Como Modificar o Assistente](#como-modificar-o-assistente)
+4. [Painel Administrativo](#painel-administrativo)
+5. [Sistema de Prompts](#sistema-de-prompts)
 6. [Boas Práticas](#boas-práticas)
 7. [Deploy e Testing](#deploy-e-testing)
 
@@ -15,17 +15,18 @@
 ### Pré-requisitos
 - Node.js 18+ (recomendado: Node 20+)
 - Editor: VS Code com extensões TypeScript e Tailwind CSS
+- Chave do Google Gemini AI
 
 ### Setup Inicial
 ```bash
 # Clone e configure
 git clone <repo-url>
-cd imperio-pharma
+cd assistente-ergogenicos
 npm install
 
-# Configure variáveis de desenvolvimento
+# Configure variáveis obrigatórias
 cp .env.example .env.local
-# Edite .env.local com suas chaves de API
+# Edite .env.local com sua chave do Gemini
 
 # Inicie o desenvolvimento
 npm run dev
@@ -43,361 +44,360 @@ npm run dev
 }
 ```
 
-## 🏗️ Estrutura de Desenvolvimento
+## 🤖 Arquitetura do Assistente IA
 
-### Arquitetura de Componentes
+### Estrutura de Componentes
 ```
-src/components/
-├── ui/           # Componentes base (Radix UI + customizações)
-├── layout/       # Header, Footer, Navigation
-├── sections/     # Seções da página principal
-├── cart/         # Sistema de carrinho
-├── checkout/     # Fluxo de checkout
-└── assistant/    # Sistema de IA
+src/components/assistant/
+├── assistant-modal.tsx      # Modal principal do assistente
+├── profile-form-step.tsx    # Formulário de perfil do usuário
+├── terms-step.tsx          # Termos de uso educacionais
+└── chat-step.tsx           # Interface de chat com IA
 ```
 
-### Padrão de Nomenclatura
-- **Componentes**: `PascalCase.tsx` (ex: `ProductCard.tsx`)
-- **Hooks**: `use-kebab-case.ts` (ex: `use-cart.ts`)
-- **Utilitários**: `kebab-case.ts` (ex: `shipping.ts`)
-- **Tipos**: `kebab-case.ts` (ex: `admin.ts`)
+### Fluxo de Funcionamento
+1. **Usuário abre o assistente** → `assistant-modal.tsx`
+2. **Preenche perfil** → `profile-form-step.tsx` (gênero, objetivo, preferência)
+3. **Aceita termos** → `terms-step.tsx` (obrigatório)
+4. **Chat com IA** → `chat-step.tsx` (conversa personalizada)
+5. **Dados salvos** → localStorage para o painel admin
 
-## 🔧 Como Modificar Componentes
+### Estado Global
+- **Perfil do usuário**: Salvo durante a sessão
+- **Configurações da IA**: Carregadas do painel admin
+- **Histórico**: Persistido para análise administrativa
 
-### 1. Adicionar Novos Produtos
+## 🔧 Como Modificar o Assistente
 
-**Localização**: `src/data/products.ts` (criar se não existir)
+### 1. Personalizar Prompts da IA
+
+**Localização**: `src/lib/gemini.ts` e Painel Admin
 
 ```typescript
-export interface Product {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  originalPrice?: number;
-  image: string;
-  category: 'injectables' | 'orals' | 'tpc';
-  brand: 'landerlan' | 'dragon-pharma' | 'balkan' | 'hilma';
-  inStock: boolean;
-}
-
-export const products: Product[] = [
-  {
-    id: "novo-produto",
-    name: "Nome do Produto",
-    description: "Descrição detalhada",
-    price: 199.99,
-    originalPrice: 299.99,
-    image: "/products/novo-produto.jpg",
-    category: "injectables",
-    brand: "landerlan",
-    inStock: true
-  }
-];
-```
-
-### 2. Modificar o Assistente IA
-
-**Localização**: `src/lib/gemini.ts`
-
-```typescript
-// Personalizar prompts do assistente
+// Prompt padrão do sistema (pode ser alterado via admin)
 const SYSTEM_PROMPT = `
-Você é um assistente especializado em suplementos...
-[Adicione suas instruções personalizadas]
+Você é um especialista em protocolos ergogênicos. 
+Responda EXCLUSIVAMENTE com opções de ciclos práticos...
+
+### DOSAGENS SEGURAS:
+**HOMENS:**
+- Testosterona: 400-600mg/sem
+[... resto do prompt]
 `;
 ```
 
-**Configurar comportamento**: `src/components/assistant/chat-step.tsx`
+**Via Painel Admin**: Acesse `/admin` → Configurações → Editor de Prompt
 
-### 3. Customizar Fluxo de Checkout
+### 2. Modificar Formulário de Perfil
 
-**Localização**: `src/components/checkout/checkout-steps.tsx`
+**Localização**: `src/components/assistant/profile-form-step.tsx`
 
 ```typescript
-// Adicionar nova etapa ao checkout
-const steps = [
-  { title: "Dados do Cliente", component: CustomerDataStep },
-  { title: "Endereço", component: AddressStep },
-  { title: "Nova Etapa", component: NovaEtapaStep }, // Nova etapa
-  { title: "Resumo", component: SummaryStep },
-  { title: "Confirmação", component: ConfirmationStep }
+// Adicionar nova opção de objetivo
+const objectives = [
+  { value: "bulking", label: "Ganho de Massa (Bulking)" },
+  { value: "cutting", label: "Definição (Cutting)" },
+  { value: "strength", label: "Força e Performance" },
+  { value: "novo-objetivo", label: "Novo Objetivo" } // Nova opção
 ];
 ```
 
-### 4. Adicionar Nova Página
+### 3. Customizar Respostas da IA
+
+**Localização**: `src/components/assistant/chat-step.tsx`
 
 ```typescript
-// 1. Criar página: src/pages/NovaPagina.tsx
-import React from 'react';
-
-const NovaPagina = () => {
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <h1>Nova Página</h1>
-    </div>
-  );
-};
-
-export default NovaPagina;
-
-// 2. Adicionar rota no App.tsx (se necessário)
+// Personalizar parâmetros da IA
+const response = await generateResponse(userMessage, {
+  systemPrompt: adminSettings?.systemPrompt || DEFAULT_PROMPT,
+  maxTokens: adminSettings?.maxTokens || 500,
+  temperature: adminSettings?.temperature || 0.7,
+  // Novos parâmetros personalizados
+});
 ```
 
-## 🗂️ Gerenciamento de Estado
-
-### Cart Context (Estado Global)
-**Localização**: `src/contexts/cart-context.tsx`
+### 4. Adicionar Validações de Perfil
 
 ```typescript
-// Acessar estado do carrinho em qualquer componente
-import { useCart } from '@/hooks/use-cart';
-
-const MeuComponente = () => {
-  const { 
-    items, 
-    addItem, 
-    removeItem, 
-    updateQuantity,
-    clearCart,
-    total 
-  } = useCart();
-  
-  // Usar métodos do carrinho
-};
-```
-
-### Adicionar Novo Context
-```typescript
-// 1. Criar: src/contexts/novo-context.tsx
-import React, { createContext, useContext } from 'react';
-
-const NovoContext = createContext<NovoContextValue | undefined>(undefined);
-
-export const NovoProvider = ({ children }: { children: React.ReactNode }) => {
-  // Lógica do estado
-  return (
-    <NovoContext.Provider value={value}>
-      {children}
-    </NovoContext.Provider>
-  );
-};
-
-// 2. Criar hook: src/hooks/use-novo.ts
-export const useNovo = () => {
-  const context = useContext(NovoContext);
-  if (!context) {
-    throw new Error('useNovo must be used within NovoProvider');
+// Validar idade mínima (exemplo)
+const validateProfile = (profile: UserProfile) => {
+  if (profile.age && profile.age < 18) {
+    throw new Error("Assistente disponível apenas para maiores de 18 anos");
   }
-  return context;
+  
+  // Outras validações personalizadas
 };
 ```
 
-## 🎨 Sistema de Design
+## 🔧 Painel Administrativo
 
-### Cores e Tokens
-**Configuração**: `src/index.css` e `tailwind.config.ts`
+### Estrutura do AdminPanel
+**Localização**: `src/pages/AdminPanel.tsx`
 
-```css
-/* Usar sempre variáveis CSS, nunca cores hardcoded */
-.exemplo {
-  background-color: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
+```typescript
+// Principais seções do painel
+const sections = {
+  dashboard: "Estatísticas em tempo real",
+  settings: "Configurações da IA", 
+  history: "Histórico de conversas",
+  analytics: "Métricas e relatórios"
+};
+```
+
+### Adicionar Nova Métrica ao Dashboard
+
+```typescript
+// Calcular nova métrica
+const calculateCustomMetric = (history: ChatMessage[]) => {
+  const protocolsRequested = history.filter(msg => 
+    msg.role === 'user' && msg.message.includes('protocolo')
+  ).length;
+  
+  return protocolsRequested;
+};
+
+// Adicionar ao estado de stats
+setStats(prev => ({
+  ...prev,
+  protocolsRequested: calculateCustomMetric(chatHistory)
+}));
+```
+
+### Personalizar Configurações da IA
+
+```typescript
+// Adicionar novo parâmetro configurável
+interface SystemSettings {
+  systemPrompt: string;
+  apiKey: string;
+  maxTokens: number;
+  temperature: number;
+  // Novos parâmetros
+  responseStyle: 'concise' | 'detailed' | 'scientific';
+  includeWarnings: boolean;
 }
 ```
 
-### Componentes Base
-Sempre use componentes do `src/components/ui/` como base:
+## 🎯 Sistema de Prompts
 
+### Prompt Engineering para Ergogênicos
+
+**Estrutura Atual**:
 ```typescript
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-
-// ✅ Correto
-<Button variant="default" size="lg">
-  Botão Padrão
-</Button>
-
-// ❌ Evitar criar botões do zero
-<button className="bg-blue-500 text-white px-4 py-2">
-  Botão Custom
-</button>
+const PROMPT_STRUCTURE = {
+  role: "Especialista em protocolos ergogênicos",
+  constraints: [
+    "Responder APENAS com opções práticas",
+    "Usar SOMENTE compostos da lista",
+    "Máximo 150 palavras",
+    "Sem avisos longos"
+  ],
+  dosages: {
+    men: "Dosagens específicas para homens",
+    women: "Dosagens específicas para mulheres"
+  },
+  format: "**Nome do Ciclo** - Composto + dosagem + duração"
+};
 ```
 
-### Responsividade
-Sempre seguir padrão mobile-first:
+### Criar Prompts Especializados
 
 ```typescript
-// ✅ Correto - Mobile first
-<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+// Prompt por objetivo
+const getPromptByObjective = (objective: string) => {
+  const prompts = {
+    bulking: `Foque em protocolos para ganho de massa...`,
+    cutting: `Priorize protocolos para definição...`,
+    strength: `Enfatize protocolos para força...`
+  };
+  
+  return prompts[objective] || DEFAULT_PROMPT;
+};
+```
 
-// ❌ Evitar - Desktop first  
-<div className="grid grid-cols-3 gap-4 lg:grid-cols-1">
+### Templates de Resposta
+
+```typescript
+// Criar templates reutilizáveis
+const RESPONSE_TEMPLATES = {
+  beginner: "Protocolo para iniciantes...",
+  intermediate: "Protocolo para intermediários...",
+  advanced: "Protocolo para avançados..."
+};
 ```
 
 ## ✅ Boas Práticas
 
-### 1. TypeScript
+### 1. TypeScript Rigoroso
 ```typescript
-// ✅ Sempre tipear props
-interface ComponentProps {
-  title: string;
-  optional?: boolean;
+// ✅ Sempre tipear dados do assistente
+interface UserProfile {
+  gender: 'male' | 'female';
+  objective: 'bulking' | 'cutting' | 'strength';
+  preference: 'oral' | 'injectable' | 'both';
 }
 
-const Component = ({ title, optional = false }: ComponentProps) => {
-  // ...
-};
-
-// ✅ Usar interfaces para objetos complexos
-interface Product {
+interface ChatMessage {
   id: string;
-  name: string;
-  // ...
+  timestamp: string;
+  role: 'user' | 'assistant';
+  message: string;
+  userProfile?: UserProfile;
 }
 ```
 
-### 2. Performance
+### 2. Tratamento de Erros da IA
 ```typescript
-// ✅ Usar useMemo para cálculos pesados
-const expensiveCalculation = useMemo(() => {
-  return items.reduce((total, item) => total + item.price, 0);
-}, [items]);
-
-// ✅ Usar useCallback para funções em deps
-const handleClick = useCallback((id: string) => {
-  // lógica
-}, [dependency]);
-```
-
-### 3. Acessibilidade
-```typescript
-// ✅ Sempre incluir atributos de acessibilidade
-<button
-  aria-label="Adicionar ao carrinho"
-  aria-describedby="product-description"
-  onClick={handleAddToCart}
->
-  <Plus className="w-4 h-4" />
-</button>
-```
-
-### 4. Tratamento de Erros
-```typescript
-// ✅ Usar try-catch apenas quando necessário
-const fetchData = async () => {
-  try {
-    const response = await api.getData();
-    return response;
-  } catch (error) {
-    console.error('Erro específico:', error);
-    throw error; // Re-throw para bubble up
+// ✅ Tratar erros específicos do Gemini
+const handleGeminiError = (error: any) => {
+  if (error.message?.includes('API_KEY')) {
+    return "Erro de configuração da IA. Contate o administrador.";
   }
+  
+  if (error.message?.includes('QUOTA_EXCEEDED')) {
+    return "Limite de consultas excedido. Tente novamente mais tarde.";
+  }
+  
+  return "Erro inesperado. Tente novamente.";
+};
+```
+
+### 3. Performance da IA
+```typescript
+// ✅ Implementar timeout para consultas
+const consultWithTimeout = async (message: string, timeout = 30000) => {
+  const controller = new AbortController();
+  
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
+  
+  try {
+    const response = await gemini.generateContent(message, {
+      signal: controller.signal
+    });
+    return response;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+};
+```
+
+### 4. Segurança e Validação
+```typescript
+// ✅ Validar entrada do usuário
+const sanitizeUserInput = (input: string) => {
+  // Remover caracteres perigosos
+  return input
+    .trim()
+    .replace(/[<>]/g, '') // Remove HTML tags básicos
+    .slice(0, 500); // Limitar tamanho
 };
 ```
 
 ## 🔄 Fluxo de Desenvolvimento
 
-### 1. Criar Feature Branch
+### 1. Testar Alterações na IA
 ```bash
-git checkout -b feature/nova-funcionalidade
+# 1. Modificar prompt ou configuração
+# 2. Reiniciar aplicação
+npm run dev
+
+# 3. Acessar painel admin
+open http://localhost:8080/admin
+
+# 4. Testar conversa
+open http://localhost:8080
+
+# 5. Verificar logs no console
 ```
 
-### 2. Desenvolvimento
-- Faça commits pequenos e descritivos
-- Teste cada alteração no browser
-- Mantenha código limpo e documentado
+### 2. Debug do Assistente
+```typescript
+// Habilitar logs detalhados
+localStorage.setItem('DEBUG_ASSISTANT', 'true');
+localStorage.setItem('DEBUG_GEMINI', 'true');
 
-### 3. Testing Local
-```bash
-# Build de produção
-npm run build
-
-# Preview do build
-npm run preview
-
-# Verificar tipos
-npm run type-check
+// Verificar dados salvos
+console.log('Admin Settings:', localStorage.getItem('admin_settings'));
+console.log('Chat History:', localStorage.getItem('chat_history'));
 ```
 
-### 4. Commit Guidelines
+### 3. Commit Guidelines
 ```bash
-# Formato: tipo(escopo): descrição
-
-git commit -m "feat(cart): adicionar cálculo de desconto"
-git commit -m "fix(checkout): corrigir validação de CEP" 
-git commit -m "docs(readme): atualizar instruções de instalação"
+# Formato específico para o assistente
+git commit -m "feat(assistant): adicionar novo objetivo de protocolo"
+git commit -m "fix(admin): corrigir exportação de dados"
+git commit -m "chore(prompts): atualizar dosagens recomendadas"
 ```
 
 ## 🚀 Deploy e Testing
 
-### Build Local
+### Build Local com IA
 ```bash
-# Build completo
+# Verificar se a chave da IA está configurada
+echo $VITE_GEMINI_API_KEY
+
+# Build de produção
 npm run build
 
-# Verificar build
+# Testar build com IA
 npm run preview
-
-# Verificar tamanho do bundle
-npm run build -- --analyze
 ```
 
-### Configuração de Produção
+### Configuração para VPS
 ```bash
-# Variáveis obrigatórias
-VITE_GEMINI_API_KEY=sua_chave_real
-VITE_WHATSAPP_NUMBER=5511999999999
-VITE_PIX_KEY=chave@pix.com
+# Variáveis obrigatórias para produção
+export VITE_GEMINI_API_KEY=sua_chave_real
+export VITE_ADMIN_PASSWORD=senha_forte_aqui
+export NODE_ENV=production
+
+# Deploy automático
+./scripts/smart-deploy.sh
 ```
 
-### Deploy Automático
+### Monitoramento da IA em Produção
 ```bash
-# Vercel
-vercel --prod
+# Verificar logs da aplicação
+pm2 logs assistente-ia
 
-# Netlify
-npm run build && netlify deploy --prod --dir=dist
+# Monitorar performance
+pm2 monit
+
+# Verificar uso da API Gemini
+curl -H "Authorization: Bearer $VITE_GEMINI_API_KEY" \
+  https://generativelanguage.googleapis.com/v1/models
 ```
 
 ## 🐛 Debug e Troubleshooting
 
-### Logs do Assistente IA
-```typescript
-// Habilitar logs detalhados
-localStorage.setItem('DEBUG_GEMINI', 'true');
+### Problemas Comuns do Assistente
+
+1. **IA não responde**
+   - Verificar chave do Gemini no `.env.local`
+   - Confirmar quota da API no Google Cloud
+   - Verificar se o prompt não está muito longo
+
+2. **Painel admin não salva configurações**
+   - Verificar permissões do localStorage
+   - Confirmar se não há erro de JSON parsing
+   - Verificar console do navegador
+
+3. **Histórico de conversas vazio**
+   - Realizar algumas conversas primeiro
+   - Verificar se localStorage não foi limpo
+   - Confirmar formato dos dados salvos
+
+### Logs Específicos
+```javascript
+// Debug específico do assistente
+window.__ASSISTANT_DEBUG__ = {
+  settings: JSON.parse(localStorage.getItem('admin_settings') || '{}'),
+  history: JSON.parse(localStorage.getItem('chat_history') || '[]'),
+  currentProfile: /* perfil atual */
+};
 ```
-
-### Verificar Estado do Carrinho
-```typescript
-// No console do browser
-window.__CART_DEBUG__ = true;
-```
-
-### Performance Issues
-```bash
-# Analisar bundle
-npm run build -- --analyze
-
-# Profile de React
-React DevTools Profiler
-```
-
-## 📞 Suporte
-
-### Problemas Comuns
-1. **Porta em uso**: O projeto detecta automaticamente porta livre
-2. **API Key inválida**: Verificar `.env.local`
-3. **Build falha**: Verificar tipos TypeScript
-
-### Recursos
-- **Documentação Radix UI**: [radix-ui.com](https://radix-ui.com)
-- **Tailwind CSS**: [tailwindcss.com](https://tailwindcss.com)
-- **React Query**: [tanstack.com/query](https://tanstack.com/query)
 
 ---
 
-**🚀 Pronto para contribuir! Siga este guia e mantenha a qualidade do código.**
+**🤖 Pronto para desenvolver o melhor assistente IA para protocolos ergogênicos!**
 
-*Para dúvidas específicas, abra uma issue ou consulte a documentação das tecnologias utilizadas.*
+*Para dúvidas específicas sobre a IA ou integração com Gemini, consulte a documentação oficial do Google AI.*

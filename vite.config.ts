@@ -8,13 +8,13 @@ import { componentTagger } from "lovable-tagger";
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
-    port: process.env.PORT ? parseInt(process.env.PORT) : undefined, // Auto-detect available port
-    strictPort: false, // Allow fallback to other ports if specified port is busy
+    port: 8080, // Porta fixa conforme solicitado
+    strictPort: false, // Allow fallback to other ports if 8080 is busy
     open: true, // Auto-open browser in development
   },
   preview: {
     host: "::",
-    port: process.env.PREVIEW_PORT ? parseInt(process.env.PREVIEW_PORT) : undefined,
+    port: process.env.PREVIEW_PORT ? parseInt(process.env.PREVIEW_PORT) : 8080,
     strictPort: false,
   },
   plugins: [

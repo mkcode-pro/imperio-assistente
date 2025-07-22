@@ -1,5 +1,5 @@
 
-# 📋 TODO - IMPÉRIO PHARMA E-COMMERCE
+# 📋 TODO - ASSISTENTE IA ERGOGÊNICOS + PAINEL ADMIN
 
 *Última atualização: Janeiro 2025*
 
@@ -11,229 +11,190 @@
   - Necessário: Chave de produção com billing configurado
   - Arquivo: `.env.local` → `VITE_GEMINI_API_KEY`
 
-- [ ] **Atualizar número do WhatsApp da empresa**
-  - Atual: `+5511999999999` (exemplo)
-  - Necessário: Número real da empresa
-  - Arquivo: `.env.local` → `VITE_WHATSAPP_NUMBER`
+- [ ] **Alterar senha padrão do painel admin**
+  - Atual: `admin123` (inseguro)
+  - Necessário: Senha forte para produção
+  - Arquivo: `src/pages/AdminPanel.tsx` linha 45
 
-- [ ] **Configurar chave PIX real**
-  - Atual: `exemplo@email.com`
-  - Necessário: Chave PIX real para recebimentos
-  - Arquivo: `.env.local` → `VITE_PIX_KEY`
+### Database e Persistência
+- [ ] **Migrar localStorage para database real**
+  - Atual: Dados salvos no localStorage do navegador
+  - Necessário: PostgreSQL, MongoDB ou Firebase
+  - Dados: histórico de conversas, configurações da IA
 
-### Conteúdo e Assets
-- [ ] **Criar arquivo de dados reais dos produtos**
-  - Atual: Dados mockados no código
-  - Necessário: Arquivo `src/data/products.ts` com produtos reais
-  - Incluir: preços, descrições, imagens, estoque
-
-- [ ] **Adicionar imagens reais dos produtos**
-  - Atual: Usando `placeholder.svg`
-  - Necessário: Fotos profissionais dos produtos
-  - Local: `public/products/` ou CDN
-
-- [ ] **Atualizar informações da empresa**
-  - Nome oficial, CNPJ, endereço
-  - Políticas de privacidade e termos de uso
-  - Arquivos: `src/components/layout/footer.tsx`
+- [ ] **Sistema de backup automático**
+  - Backup diário das conversas
+  - Export automático das configurações
+  - Recuperação de dados em caso de falha
 
 ## 🟡 IMPORTANTE (Melhorias Significativas)
 
-### Backend e Persistência
-- [ ] **Integrar Supabase para persistência**
-  - Sistema de produtos em banco de dados
-  - Gestão de pedidos persistente
-  - Backup automático de dados
-  - Tabelas: `products`, `orders`, `customers`
-
-- [ ] **Implementar autenticação admin real**
-  - Sistema de login seguro
-  - Proteção de rotas administrativas
-  - Gerenciamento de sessões
-  - Arquivo: `src/hooks/use-admin-auth.ts`
-
-- [ ] **Sistema de pedidos avançado**
-  - Status de pedidos (pendente, processando, enviado)
-  - Histórico de compras do cliente
-  - Notificações automáticas
-  - Relatórios de vendas
-
-### Funcionalidades do E-commerce
-- [ ] **Sistema de estoque em tempo real**
-  - Controle de quantidade disponível
-  - Alertas de baixo estoque
-  - Reserva temporária no carrinho
-
-- [ ] **Calculadora de frete avançada**
-  - Integração com Correios API
-  - Múltiplas transportadoras
-  - Frete grátis por valor mínimo
-
-- [ ] **Sistema de cupons de desconto**
-  - Códigos promocionais
-  - Desconto por percentual ou valor fixo
-  - Validade e uso único
-
 ### Painel Administrativo
-- [ ] **Dashboard de vendas funcional**
-  - Gráficos de vendas por período
-  - Top produtos mais vendidos
-  - Métricas de conversão
+- [ ] **Analytics avançados com gráficos**
+  - Gráficos de conversas por período (Recharts)
+  - Distribuição por perfil de usuário
+  - Protocolos mais consultados
+  - Métricas de performance da IA
 
-- [ ] **Gestão de produtos pelo admin**
-  - CRUD completo de produtos
-  - Upload de imagens
-  - Categorias e marcas
+- [ ] **Sistema de usuários admin**
+  - Múltiplos administradores
+  - Níveis de acesso (admin, moderador, visualizador)
+  - Sistema de login com JWT
+  - Logs de ações administrativas
 
-- [ ] **Gestão de pedidos**
-  - Lista de pedidos em tempo real
-  - Alteração de status
-  - Envio de notificações ao cliente
+- [ ] **Gestão avançada de prompts**
+  - Versionamento de prompts da IA
+  - A/B testing de diferentes prompts
+  - Templates de protocolos pré-definidos
+  - Histórico de alterações
+
+- [ ] **Monitoramento em tempo real**
+  - Conversas ativas no momento
+  - Status da API do Gemini
+  - Performance e latência
+  - Alertas de erro
+
+### Sistema do Assistente IA
+- [ ] **Melhorias na IA**
+  - Prompts mais especializados por objetivo
+  - Sistema de feedback do usuário
+  - Learning from conversations (com aprovação)
+  - Integração com base de conhecimento
+
+- [ ] **Funcionalidades avançadas**
+  - Histórico de conversas por usuário (cookies)
+  - Sistema de favoritos para protocolos
+  - Compartilhamento de consultas
+  - Export PDF das recomendações
+
+- [ ] **Validações e segurança**
+  - Rate limiting para evitar spam
+  - Filtros de conteúdo inadequado
+  - Validação de perfil de usuário
+  - Termos de uso mais detalhados
 
 ## 🟢 MELHORIAS (Quando Houver Tempo)
 
-### Performance e SEO
-- [ ] **Otimizar imagens**
-  - Conversão para WebP
-  - Lazy loading
-  - Responsive images
+### Performance e Otimização
+- [ ] **Cache inteligente**
+  - Cache de respostas similares
+  - Cache de configurações da IA
+  - Lazy loading de componentes
+  - Service Worker para offline
 
-- [ ] **Implementar PWA completo**
-  - Service Worker
-  - Cache offline
-  - Instalação no device
-
-- [ ] **Melhorar SEO**
-  - Meta tags dinâmicas
-  - Sitemap XML
+- [ ] **SEO e Acessibilidade**
+  - Meta tags otimizadas
   - Schema.org markup
-  - Open Graph tags
+  - Melhor acessibilidade (ARIA)
+  - Suporte a temas (dark/light)
 
-- [ ] **Analytics e métricas**
-  - Google Analytics 4
-  - Facebook Pixel
-  - Hotjar ou similar
-  - Métricas de conversão
+- [ ] **PWA completo**
+  - Instalação no dispositivo
+  - Notificações push
+  - Funcionamento offline básico
+  - Sincronização quando online
+
+### Integrações Externas
+- [ ] **API REST completa**
+  - Endpoints para consultas externas
+  - Webhooks para integrações
+  - Rate limiting e autenticação
+  - Documentação da API
+
+- [ ] **Integrações com serviços**
+  - Google Analytics para métricas
+  - Sentry para monitoramento de erros
+  - Slack/Discord para notificações
+  - Email para relatórios periódicos
 
 ### UX/UI Melhorias
-- [ ] **Sistema de avaliações**
-  - Avaliações por estrelas
-  - Comentários de clientes
-  - Fotos dos clientes
+- [ ] **Interface mais avançada**
+  - Modo escuro nativo
+  - Animações e transições
+  - Customização visual
+  - Atalhos de teclado
 
-- [ ] **Wishlist/Favoritos**
-  - Lista de desejos
-  - Comparação de produtos
-  - Notificação quando em promoção
-
-- [ ] **Chat ao vivo**
-  - Suporte em tempo real
-  - Integração com WhatsApp Business
-  - Bot para perguntas frequentes
-
-- [ ] **Busca avançada**
-  - Busca por texto
-  - Filtros por preço, marca, categoria
-  - Sugestões automáticas
-
-### Integrações Avançadas
-- [ ] **Gateway de pagamento**
-  - PIX automático
-  - Cartão de crédito
-  - Boleto bancário
-  - Mercado Pago ou PagSeguro
-
-- [ ] **Email marketing**
-  - Carrinho abandonado
-  - Newsletter
-  - Ofertas personalizadas
-
-- [ ] **Redes sociais**
-  - Compartilhamento de produtos
-  - Login social
-  - Instagram Shopping
+- [ ] **Mobile experience**
+  - App móvel com React Native
+  - Gestos touch avançados
+  - Notificações mobile
+  - Integração com assistentes de voz
 
 ## ✅ CONCLUÍDO
 
 ### Core Features
-- [x] **Sistema completo de carrinho**
-  - Adicionar/remover produtos
-  - Alterar quantidades
-  - Cálculo de totais
+- [x] **Sistema completo do assistente IA**
+  - Chat inteligente com Google Gemini
+  - Formulário de perfil personalizado
+  - Sistema de termos e condições
+  - Interface responsiva e intuitiva
 
-- [x] **Checkout em 4 etapas**
-  - Dados do cliente
-  - Endereço de entrega
-  - Resumo do pedido
-  - Confirmação e WhatsApp
+- [x] **Painel administrativo funcional**
+  - Dashboard com estatísticas básicas
+  - Editor de prompt do sistema
+  - Visualização do histórico de conversas
+  - Sistema de autenticação simples
+  - Exportação de dados em JSON
 
-- [x] **Design responsivo mobile-first**
-  - Header adaptativo
-  - Navegação móvel inferior
-  - Grid responsivo de produtos
-
-- [x] **Assistente IA com Google Gemini**
-  - Chat inteligente
-  - Formulário de perfil
-  - Termos de uso
-
-- [x] **Integração ViaCEP**
-  - Busca automática de endereço
-  - Validação de CEP
-  - Preenchimento automático
-
-- [x] **Sistema de categorias e marcas**
-  - Acordeão de categorias
-  - Filtro por marca
-  - Navegação intuitiva
-
-- [x] **Modais e feedbacks**
-  - Modal de produto adicionado
-  - Confirmações de ações
-  - Estados de loading
+- [x] **Configuração e deploy**
+  - Auto-detecção de portas livres
+  - Scripts de deploy para VPS
+  - Configuração nginx
+  - Sistema de variáveis de ambiente
 
 ### Arquitetura e Configuração
-- [x] **Configuração dinâmica de portas**
-  - Auto-detecção de portas livres
-  - Suporte a variáveis de ambiente
-  - Compatibilidade com VPS
+- [x] **Stack tecnológico completo**
+  - React 18 + TypeScript
+  - Vite com HMR
+  - Radix UI + Tailwind CSS
+  - Google Generative AI
 
 - [x] **Sistema de design consistente**
-  - Variáveis CSS customizadas
-  - Componentes Radix UI
-  - Tailwind CSS configurado
-
-- [x] **TypeScript completo**
-  - Tipagem em todos os componentes
-  - Interfaces bem definidas
-  - Validação de tipos
+  - Componentes reutilizáveis
+  - Tipagem TypeScript completa
+  - Sistema de cores HSL
+  - Responsividade mobile-first
 
 ---
 
 ## 🎯 PRIORIZAÇÃO SUGERIDA
 
-### **Semana 1**: Configuração Crítica
-1. Configurar APIs reais (Gemini, WhatsApp, PIX)
-2. Criar arquivo de produtos reais
-3. Adicionar imagens dos produtos
+### **Semana 1**: Preparação para Produção
+1. Configurar API real do Gemini
+2. Alterar senha padrão do admin
+3. Implementar database básico
+4. Sistema de backup
 
-### **Semana 2**: Backend Básico
-1. Integrar Supabase
-2. Implementar sistema de pedidos
-3. Autenticação admin
+### **Semana 2**: Analytics e Monitoramento
+1. Implementar gráficos no painel
+2. Sistema de métricas avançadas
+3. Monitoramento em tempo real
+4. Alertas de sistema
 
-### **Semana 3**: Melhorias de UX
-1. Sistema de estoque
-2. Frete avançado
-3. Dashboard funcional
+### **Semana 3**: Melhorias do Assistente
+1. Prompts mais especializados
+2. Sistema de feedback
+3. Validações de segurança
+4. Rate limiting
 
-### **Semana 4**: Otimização
-1. Performance e SEO
-2. Analytics
-3. Testes finais
+### **Semana 4**: Otimização e Deploy
+1. Performance e cache
+2. SEO e acessibilidade
+3. Deploy em produção
+4. Testes finais
+
+---
+
+## 📊 MÉTRICAS DE SUCESSO
+
+- **Performance**: Tempo de resposta < 2s
+- **Disponibilidade**: Uptime > 99.5%
+- **Segurança**: Zero falhas de segurança
+- **UX**: Score de satisfação > 4.5/5
+- **Admin**: 100% das funcionalidades operacionais
 
 ---
 
 **📧 Para reportar bugs ou sugerir melhorias, abra uma issue no repositório.**
 
-*Mantenha este TODO atualizado conforme o progresso do desenvolvimento.*
+*Mantenha este TODO atualizado conforme o progresso do desenvolvimento do assistente IA.*
